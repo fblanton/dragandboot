@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "serve": "webpack-dev-server"
+    "serve": "webpack-dev-server --module-bind \"css=style\\!css\""
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,10 @@
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
+    "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
+    "react-hot-loader": "^3.0.0-beta.5",
+    "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.1"
   },
