@@ -1,0 +1,35 @@
+{
+  "name": "dragandboot4",
+  "version": "1.0.0",
+  "description": "A tool for building Bootstrap 4 based websites with drag and drop components.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "serve": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fblanton/dragandboot.git"
+  },
+  "keywords": [
+    "bootstrap",
+    "react",
+    "redux"
+  ],
+  "author": "Forrest Blanton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fblanton/dragandboot/issues"
+  },
+  "homepage": "https://github.com/fblanton/dragandboot#readme",
+  "devDependencies": {
+    "babel-core": "^6.16.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "file-loader": "^0.9.0",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1"
+  }
+}
