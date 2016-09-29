@@ -5,7 +5,10 @@ const DragApp = require('./DragApp');
 
 const App = (props) => { return (
   <Provider store={ props.store }>
+    <div>
+    <h2>Hello World</h2>
     <DragApp />
+    </div>
   </Provider>
 )};
 
