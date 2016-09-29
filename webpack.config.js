@@ -5,6 +5,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://0.0.0.0:3000',
     'webpack/hot/dev-server',
+    'react-hot-loader/patch',
     './src/index.js'
   ],
   output: {
@@ -21,7 +22,12 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.js$/, exclude: /(node_modules)/, loader: 'babel-loader', query: { "presets": ["react", "es2015"] } },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        loader: 'babel-loader?presets[]=react,presets[]=es2015',
+        plugins: ['react-hot-loader/babel']
+       },
       { test: /\.html$/, exclude: /(node_modules)/, loader: 'file?name=[name].[ext]' },
     ]
   }

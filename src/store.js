@@ -1,12 +1,14 @@
 const { createStore } = require('redux');
+const appReducer = require('./reducers');
 
-const appReducer = (state = ['Hello'], action) => {
-  switch (action.type) {
-    case 'ADD':
-      return [...state, action.payload];
-    default:
-      return state;
-  }
-};
+const store = createStore(appReducer, window.devToolsExtension && window.devToolsExtension());
 
-module.exports = createStore(appReducer);
+if (module.hot) {
+  module.hot.accept('./reducers', () => {
+    console.log('modified reducers');
+    const nextRootReducer = require('./reducers');
+    store.replaceReducer(nextRootReducer);
+  });
+}
+
+module.exports = store;
