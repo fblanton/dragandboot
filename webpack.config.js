@@ -3,9 +3,9 @@ var path = require('path');
 
 module.exports = {
   entry: [
-    'react-hot-loader/patch',
     'webpack-dev-server/client?http://0.0.0.0:3000',
-    'webpack/hot/dev-server',
+    'webpack/hot/only-dev-server',
+    'react-hot-loader/patch',
     './src/index.js'
   ],
   output: {
