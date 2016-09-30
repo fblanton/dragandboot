@@ -1,30 +1,15 @@
 const React = require('react');
 const { createDraggable, createDroppable } = require('./drag-and-drop');
 
-const Draggable = createDraggable('toolbar-item');
-const Droppable = createDroppable('toolbar-item');
-const DragAndDrop = ({ children }) =>
-(  <Draggable>
-    <Droppable>
-      { [...React.Children.toArray(children)] }
-    </Droppable>
-  </Draggable>
-);
+const Drag = createDraggable('toolbar-item');
+const Drop = createDroppable('toolbar-item');
 
 const Toolbar = () =>
-  <div>
-    <Draggable data-name='drag1' style={{ display: 'inline-block' }}>
+  <nav className='navbar navbar-fixed-bottom navbar-light bg-faded'>
+    <a className='navbar-brand'>Dragn Boot</a>
+    <Drag data-name='drag1' style={{ display: 'inline-block' }}>
       <span>First Item</span>
-    </Draggable>
-    <Draggable style={{ display: 'inline-block' }}>
-      <span>My Toolbar Goes Here</span>
-    </Draggable>
-    <Droppable className='drop'>
-      <div>Drop Here</div>
-    </Droppable>
-    <DragAndDrop className='drop2'>
-      <div>Drop Here</div>
-    </DragAndDrop>
-  </div>;
+    </Drag>
+  </nav>;
 
 module.exports = Toolbar;
