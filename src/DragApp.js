@@ -1,22 +1,30 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { createDraggable } = require('./drag-and-drop');
+const { createDraggable, createDroppable } = require('./drag-and-drop');
 const add = require('./actions');
 
-const mapStateToProps = state => ({ hellos: state });
+const mapStateToProps = state => ({ hellos: state.hellos });
 const mapDispatchToProps = { add };
 
-const Draggable = createDraggable('list-item');
+const Drag = createDraggable();
+const dropSpec = {
+  drop: (props, monitor, compnent) => {
+    const dropped = monitor.getItem();
+    props.dispatch(dropped.text);
+    console.log(props, dropped);
+  }
+};
 
-const Hello = ({ hellos, add }) => {
-  return (
-    <div>
+const Drop = createDroppable('toolbar-item', dropSpec);
+
+const Hello = ({ hellos, add }) =>
+  <div>
+    <Drop dispatch={ add }>
+      <h1>DROP HERE</h1>
+    </Drop>
     { hellos.map((hello, i) =>
-      <Draggable key={ i }>
-        <h1 onClick={ () => add('Hello') }>{ hello }</h1>
-      </Draggable>)
+      <Drag key={ i }><h1>{ hello }</h1></Drag>)
     }
-    </div>
-  )
-}
+  </div>;
+
 module.exports = connect(mapStateToProps, mapDispatchToProps)(Hello);
