@@ -4,7 +4,7 @@
   "description": "A tool for building Bootstrap 4 based websites with drag and drop components.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --module-bind \"css=style\\!css\"",
     "watch": "webpack --watch",
     "serve": "webpack-dev-server --module-bind \"css=style\\!css\""
   },
