@@ -1,12 +1,16 @@
 const React = require('react');
-const enableDrag = require('./enableReactDnd');
+const { createDraggable } = require('./drag-and-drop');
 
-const Toolbar = ({ isDragging }) => {
-  return (
-    <div style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <h2>My Toolbar Goes Here</h2>
-    </div>
-  );
-}
+const Draggable = createDraggable('toolbar');
 
-module.exports = enableDrag(Toolbar);
+const Toolbar = () =>
+  <div>
+    <Draggable>
+      <span>First Item</span>
+    </Draggable>
+    <Draggable>
+      <span>My Toolbar Goes Here</span>
+    </Draggable>
+  </div>;
+
+module.exports = Toolbar;

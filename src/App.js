@@ -6,16 +6,6 @@ const Toolbar = require('./Toolbar');
 const HTML5Backend = require('react-dnd-html5-backend');
 const { DragDropContext } = require('react-dnd');
 
-const StatefulWrapper = React.createClass({
-  render: function () {
-    return (
-      <div>
-        <App store={ this.props.store }/>
-      </div>
-    );
-  }
-});
-
 const App = (props) => { return (
   <Provider store={ props.store }>
     <div>
@@ -25,4 +15,14 @@ const App = (props) => { return (
   </Provider>
 )};
 
-module.exports = DragDropContext(HTML5Backend)(StatefulWrapper);
+const StatefulApp = React.createClass({
+  render: function () {
+    return (
+      <div>
+        <App store={ this.props.store }/>
+      </div>
+    );
+  }
+});
+
+module.exports = DragDropContext(HTML5Backend)(StatefulApp);
