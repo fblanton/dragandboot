@@ -4,7 +4,7 @@ const { DragSource, DropTarget } = require('react-dnd');
 // create a draggable react compnent
 const defaultDragSpec = {
   beginDrag: () => ({ text: 'Hello Dragging' }),
-  endDrag: (props, monitor) => { }
+  endDrag: (props, monitor) => { console.log() }
 };
 
 const defaultDragCollect = (connect, monitor) => ({
