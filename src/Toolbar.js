@@ -5,10 +5,13 @@ const Draggable = createDraggable('toolbar');
 
 const Toolbar = () =>
   <div>
-    <Draggable>
+    <Draggable
+      style={{ display: 'inline-block' }}
+      
+    >
       <span>First Item</span>
     </Draggable>
-    <Draggable>
+    <Draggable style={{ display: 'inline-block' }}>
       <span>My Toolbar Goes Here</span>
     </Draggable>
   </div>;
