@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "54c1fcf7a635413e158d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8b31dd88c45eb83fe7ce"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -38397,8 +38397,6 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 	var React = __webpack_require__(80);
 
 	var _require = __webpack_require__(434);
@@ -38442,7 +38440,7 @@
 	        className: isDragging ? 'draggable dragging' : 'draggable',
 	        style: _extends({}, style, { opacity: isDragging ? 0.5 : 1 })
 	      },
-	      [].concat(_toConsumableArray(React.Children.toArray(children)))
+	      children
 	    ));
 	  }
 	});
@@ -38479,7 +38477,7 @@
 	        className: isOver ? 'hoverable hovered' : 'hoverable',
 	        style: _extends({}, style)
 	      },
-	      [].concat(_toConsumableArray(React.Children.toArray(children)))
+	      children
 	    ));
 	  }
 	});
@@ -51488,8 +51486,8 @@
 
 
 	var dragSpec = {
-	  beginDrag: function beginDrag() {
-	    return { text: 'from toolbar' };
+	  beginDrag: function beginDrag(props) {
+	    return { text: props['data-text'] };
 	  }
 	};
 	var Drag = createDraggable('toolbar-item', dragSpec);
@@ -51506,11 +51504,20 @@
 	    ),
 	    React.createElement(
 	      Drag,
-	      { 'data-type': 'hello', style: { display: 'inline-block' } },
+	      { 'data-text': 'hello', style: { display: 'inline-block' } },
 	      React.createElement(
 	        'span',
 	        null,
 	        'Drag Me'
+	      )
+	    ),
+	    React.createElement(
+	      Drag,
+	      { 'data-text': 'World!', style: { display: 'inline-block' } },
+	      React.createElement(
+	        'span',
+	        null,
+	        'Or Me'
 	      )
 	    )
 	  );
