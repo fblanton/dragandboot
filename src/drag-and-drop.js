@@ -22,7 +22,7 @@ const Draggable = React.createClass({
         className={ isDragging ? 'draggable dragging' : 'draggable' }
         style={{ ...style, opacity: (isDragging ? 0.5 : 1) }}
       >
-        { [...React.Children.toArray(children)] }
+        { children }
       </div>
     );
   }
@@ -50,7 +50,7 @@ const Droppable = React.createClass({
         className= { isOver ? 'hoverable hovered' : 'hoverable'}
         style={{ ...style }}
       >
-        { [...React.Children.toArray(children)] }
+        { children }
       </div>
     );
   }
