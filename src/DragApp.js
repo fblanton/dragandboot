@@ -1,12 +1,21 @@
 const React = require('react');
 const { connect } = require('react-redux');
-const { renderPage } = require('./util');
+const { expandChildren } = require('./util');
+const { Page } = require('./dnd-components');
 
 const mapStateToProps = state => ({
   activePage: state.activePage,
   components: state.components
 });
 
-const Page = ({ activePage, components }) => renderPage(activePage, components);
+const DragApp = ({ activePage, components }) => {
+  const children = components[activePage].children;
 
-module.exports = connect(mapStateToProps)(Page);
+  return (
+    <Page>
+      { expandChildren(children, components) }
+    </Page>
+  );
+};
+
+module.exports = connect(mapStateToProps)(DragApp);

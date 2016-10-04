@@ -1,17 +1,6 @@
 const React = require('react');
 const componentMap = require('./componentMap');
 
-const renderPage = (activePage, components) => {
-  const page = components[activePage];
-  const PageComponent = componentMap(page.type);
-
-  return (
-    <PageComponent>
-      { expandChildren(page.children, components) }
-    </PageComponent>
-  );
-};
-
 const expandChildren = (children, components) => children.map(
   (child, index) => {
     if (typeof child === 'string') return child;
@@ -35,6 +24,5 @@ const expandChildren = (children, components) => children.map(
 );
 
 module.exports = {
-  renderPage,
   expandChildren
 }

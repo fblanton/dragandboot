@@ -7,6 +7,6 @@ const Drop = createDroppable('Col');
 module.exports = ({children, ...rest}) =>
   <Drop>
     <Row {...rest}>
-      { children }
+      { children.length ? children : <div className='empty'>DROP COLS HERE</div> }
     </Row>
   </Drop>;

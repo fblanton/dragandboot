@@ -15,12 +15,12 @@ const defaultDropCollect = (connect, monitor) => ({
 
 const Droppable = React.createClass({
   render: function() {
-    const { connectDropTarget, isOver, children, style } = this.props;
+    const { connectDropTarget, isOver, children, style, className } = this.props;
 
     return connectDropTarget(
       <div
         data-hover={ isOver }
-        className= { isOver ? 'hoverable hovered' : 'hoverable'}
+        className= { (isOver ? 'hoverable hovered' : 'hoverable') + ( (className) ? (' ' + className) : '') }
         style={{ ...style }}
       >
         { children }
