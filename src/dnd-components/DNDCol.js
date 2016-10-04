@@ -1,6 +1,6 @@
 const React = require('react');
 const { Col } = require('reactstrap');
-const { createDraggable, createDroppable } = require('../drag-and-drop');
+const { createDraggable, createDroppable } = require('../dnd-higher-order-components');
 
 const Drop = createDroppable('h1');
 

@@ -1,22 +1,10 @@
 const { combineReducers } = require('redux');
 const uuid = require('uuid-v4');
 
-const pages = (state = [], action) => {
+const activePage = (state = '', action) => {
   switch (action.type) {
-    case 'VIEW_PAGE':
-      const currentActive = state.findIndex(({ active }) => active);
-      const newActive = state.findIndex(({ id }) => id === action.id);
-
-      if (currentActive === newActive || newActive === -1) return state;
-
-      return state.map((page, index) => {
-        if (index === currentActive) return { ...page, active: false }
-        if (index === newActive) return { ...page, active: true }
-        return page;
-      });
-    case 'NEW_PAGE':
-      const page = {id: uuid(), title: 'Untitled', children: [], active: false, ...action.page};
-      return [...state, page];
+    case 'SET_ACTIVE':
+      return action.id;
     default:
       return state;
   }
@@ -45,4 +33,4 @@ const components = (state = {}, action) => {
   }
 };
 
-module.exports = combineReducers({ pages, components });
+module.exports = combineReducers({ activePage, components });

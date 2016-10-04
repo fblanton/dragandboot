@@ -1,28 +1,21 @@
 const React = require('react');
 const { Provider } = require('react-redux');
-const { render } = require('react-dom');
 const DragApp = require('./DragApp');
 const Toolbar = require('./Toolbar');
 const HTML5Backend = require('react-dnd-html5-backend');
 const { DragDropContext } = require('react-dnd');
 
-const App = (props) => { return (
-  <Provider store={ props.store }>
-    <div>
-      <Toolbar />
-      <DragApp />
-    </div>
-  </Provider>
-)};
-
-const StatefulApp = React.createClass({
+const App = React.createClass({
   render: function () {
     return (
-      <div>
-        <App store={ this.props.store }/>
-      </div>
+      <Provider store={ this.props.store }>
+        <div>
+          <Toolbar />
+          <DragApp />
+        </div>
+      </Provider>
     );
   }
 });
 
-module.exports = DragDropContext(HTML5Backend)(StatefulApp);
+module.exports = DragDropContext(HTML5Backend)(App);

@@ -15,23 +15,14 @@ const render = TheApp => ReactDOM.render(
   , document.getElementById('app')
 );
 
-store.dispatch({ type: 'NEW_PAGE', page: {
-    title: 'Home',
-    active: true,
-    children: [
-      { id: 0 }
-    ]
-  }
-});
-
-store.dispatch({type: 'ADD_COMPONENT', component: {id: 0, type: 'div', children: []}});
+store.dispatch({type: 'ADD_COMPONENT', component: {id: 0, type: 'Page', children: []}});
+store.dispatch({type: 'SET_ACTIVE', id: 0});
 store.dispatch({type: 'ADD_COMPONENT', parent: { id: 0 }, component: {id: 1, type: 'Container', children: []}});
 store.dispatch({type: 'ADD_COMPONENT', parent: { id: 1 }, component: {id: 2, type: 'Row', children: []}});
 store.dispatch({type: 'ADD_COMPONENT', parent: { id: 2 }, component: {id: 3, type: 'Col', children: []}});
 store.dispatch({type: 'ADD_COMPONENT', parent: { id: 3 }, component: {id: uuid(), type: 'b', children: ['This is  2nd a test.']}});
 
 render(App);
-
 
 if (module.hot) {
   module.hot.accept('./App', () => {

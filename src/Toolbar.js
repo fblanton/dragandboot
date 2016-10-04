@@ -1,5 +1,5 @@
 const React = require('react');
-const { createDraggable, createDroppable } = require('./drag-and-drop');
+const { createDraggable, createDroppable } = require('./dnd-higher-order-components');
 
 const dragSpec = {
   beginDrag: (props) => ({ text: props['data-text'] })

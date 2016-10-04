@@ -1,12 +1,13 @@
 const React = require('react');
 const R = require('reactstrap');
-const DND = require('./dnd-components/index');
+const DND = require('./dnd-components');
 
 module.exports = item => {
   const components = {
     Container: DND.Container,
     Row: DND.Row,
-    Col: DND.Col
+    Col: DND.Col,
+    Page: DND.Page
   };
 
   const theComponent = components[item];

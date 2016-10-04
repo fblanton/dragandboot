@@ -1,8 +1,8 @@
 const React = require('react');
 const { Container } = require('reactstrap');
-const { createDraggable, createDroppable } = require('../drag-and-drop');
+const { createDraggable, createDroppable } = require('../dnd-higher-order-components');
 
-const Drop = createDroppable('row');
+const Drop = createDroppable('Row');
 
 module.exports = ({children, ...rest}) =>
   <Drop>
