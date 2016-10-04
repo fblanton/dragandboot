@@ -2,49 +2,46 @@ const React = require('react');
 const { connect } = require('react-redux');
 const { createDraggable, createDroppable } = require('./drag-and-drop');
 const add = require('./actions');
-const { Container, Row, Col } = require('reactstrap')
+const uuid = require('uuid-v4');
+const componentMap = require('./componentMap');
 
-const mapStateToProps = state => ({ hellos: state.hellos });
+const mapStateToProps = state => ({
+  page: state.pages.find(({ active }) => active),
+  components: state.components
+});
+
 const mapDispatchToProps = { add };
 
 const Drag = createDraggable();
 const dropSpec = {
-  drop: (props, monitor, compnent) => {
+  drop: (props, monitor, component) => {
     const dropped = monitor.getItem();
-    if (props.dispatch) props.dispatch(dropped.text);
+    if (props.callback) props.callback(dropped.text);
     console.log(props, dropped);
   }
 };
 
 const Drop = createDroppable('toolbar-item', dropSpec);
 
-const Hello = ({ hellos, add }) =>
-  <div>
-    <Container>
-      <Row>
-        <Col xs="4">
-          <h1>Hello Row</h1>
-          { hellos.map((hello, i) =>
-            <Drag key={ i }><h1>{ hello }</h1></Drag>)
-          }
-        </Col>
-        <Col xs="4">
-          <h1>Hello Row</h1>
-          { hellos.map((hello, i) =>
-            <Drag key={ i }><h1>{ hello }</h1></Drag>)
-          }
-        </Col>
-        <Col xs="4">
-          <h1>Hello Row</h1>
-          { hellos.map((hello, i) =>
-            <Drag key={ i }><h1>{ hello }</h1></Drag>)
-          }
-        </Col>
-      </Row>
-    </Container>
-    <Drop dispatch={ add }>
-      <h1>DROP HERE</h1>
-    </Drop>
-  </div>;
+const expandChildren = (children, components) =>
+  children.map((child, index) => {
+    if (typeof child === 'string') {
+      return child;
+    } else if (typeof components[child.id] === 'undefined') {
+      console.log('Having issues, child: ', child.id, 'c[child]: ', components[child.id], 'typeof child: ', typeof child);
+      return;
+    } else {
+      const element = componentMap(components[child.id].type);
+      return React.createElement(
+        element, {key: index}, expandChildren(components[child.id].children, components)
+      );
+    }
+    }
+  );
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(Hello);
+const Page = ({ page, components, add }) =>
+  <Drop callback={ add }>
+    { (page.children.length) ? expandChildren(page.children, components) : '' }
+  </Drop>;
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Page);

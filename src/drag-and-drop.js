@@ -43,7 +43,7 @@ const defaultDropCollect = (connect, monitor) => ({
 const Droppable = React.createClass({
   render: function() {
     const { connectDropTarget, isOver, children, style } = this.props;
-
+    
     return connectDropTarget(
       <div
         data-hover={ isOver }
@@ -58,5 +58,5 @@ const Droppable = React.createClass({
 
 module.exports = {
   createDraggable: (type = 'drag-and-drop', spec = defaultDragSpec, collect = defaultDragCollect) => DragSource(type, spec, collect)(Draggable),
-  createDroppable: (types = 'drag-and-drop', spec = defaultDropSpec, collect = defaultDropCollect) => DropTarget(types, spec, collect)(Droppable)
+  createDroppable: (types = ['drag-and-drop'], spec = defaultDropSpec, collect = defaultDropCollect) => DropTarget(types, spec, collect)(Droppable)
 };
