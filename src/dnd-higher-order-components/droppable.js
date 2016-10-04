@@ -1,5 +1,6 @@
 const React = require('react');
 const { DropTarget } = require('react-dnd');
+const { connect } = require('react-redux');
 
 // create a react component that can receive draggable items
 const defaultDropSpec = {
@@ -19,7 +20,6 @@ const Droppable = React.createClass({
 
     return connectDropTarget(
       <div
-        data-hover={ isOver }
         className= { (isOver ? 'hoverable hovered' : 'hoverable') + ( (className) ? (' ' + className) : '') }
         style={{ ...style }}
       >
@@ -29,4 +29,4 @@ const Droppable = React.createClass({
   }
 });
 
-module.exports = (types = ['drag-and-drop'], spec = defaultDropSpec, collect = defaultDropCollect) => DropTarget(types, spec, collect)(Droppable);
+module.exports = (types = ['drag-and-drop'], spec = defaultDropSpec, collect = defaultDropCollect) => connect()(DropTarget(types, spec, collect)(Droppable));

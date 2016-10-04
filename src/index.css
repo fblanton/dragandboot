@@ -4,7 +4,7 @@
 }*/
 
 .hovered {
-  background-color: red;
+  background-color: rgb(200,230,200);
 }
 
 .page {
@@ -19,4 +19,12 @@
   border-style: dashed;
   border-radius: .3em;
   border-color: gray;
+}
+
+.hovered .empty {
+  background-color: rgb(200,230,200);
+}
+
+.page .empty {
+  height: 100%;
 }

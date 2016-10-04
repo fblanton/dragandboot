@@ -12,7 +12,7 @@ const expandChildren = (children, components) => children.map(
       const { children } = components[id];
 
       return (
-        <Component key={ index }>
+        <Component key={ index } data-id={ id }>
           { expandChildren(children, components) }
         </Component>
       );

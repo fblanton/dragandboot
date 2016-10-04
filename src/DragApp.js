@@ -12,7 +12,7 @@ const DragApp = ({ activePage, components }) => {
   const children = components[activePage].children;
 
   return (
-    <Page>
+    <Page data-id={ activePage }>
       { expandChildren(children, components) }
     </Page>
   );
