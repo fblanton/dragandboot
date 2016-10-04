@@ -3,11 +3,10 @@ const { Container } = require('reactstrap');
 const { createDraggable, createDroppable } = require('../drag-and-drop');
 
 const Drop = createDroppable('row');
-const DNDContainer = ({children, ...rest}) =>
+
+module.exports = ({children, ...rest}) =>
   <Drop>
     <Container {...rest}>
       { children }
     </Container>
   </Drop>;
-
-module.exports = DNDContainer;
