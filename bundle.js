@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a0344c3ba05d3ffde313"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "391ddc25c19b5578834b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -17916,7 +17916,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/*.hoverable {\n  height: 100px;\n  width: 100px;\n}*/\n\n.hovered {\n  background-color: rgb(200,230,200);\n}\n\n.page {\n  height: 100vh;\n  overflow: scroll;\n}\n\n.empty {\n  line-height: 5em;\n  text-align: center;\n  background-color: lightgray;\n  border-style: dashed;\n  border-radius: .3em;\n  border-color: gray;\n}\n\n.hovered .empty {\n  background-color: rgb(200,230,200);\n}\n\n.page .empty {\n  height: 100%;\n}\n", ""]);
+	exports.push([module.id, "/*.hoverable {\n  height: 100px;\n  width: 100px;\n}*/\n\n.page {\n  height: 100vh;\n  overflow: scroll;\n}\n\n.empty {\n  line-height: 5em;\n  text-align: center;\n  border-style: dashed;\n  border-radius: .3em;\n  border-color: gray;\n}\n\n.droppable {\n  background-color: rgba(230,230,200,.5);\n  padding: 1em;\n}\n\n.hovered {\n  background-color: rgba(200,230,200,.5);\n}\n\n.page .empty {\n  height: 100%;\n}\n", ""]);
 	
 	// exports
 
@@ -37522,6 +37522,18 @@
 	  }
 	};
 	
+	var visibleTools = function visibleTools() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'all';
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case 'TOOL_VISIBILITY':
+	      return action.visible;
+	    default:
+	      return state;
+	  }
+	};
+	
 	var components = function components() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 	  var action = arguments[1];
@@ -37543,7 +37555,7 @@
 	  }
 	};
 	
-	module.exports = combineReducers({ activePage: activePage, components: components });
+	module.exports = combineReducers({ activePage: activePage, components: components, visibleTools: visibleTools });
 
 /***/ },
 /* 423 */
@@ -37559,7 +37571,7 @@
 	
 	var DragApp = __webpack_require__(433);
 	var Toolbar = __webpack_require__(572);
-	var HTML5Backend = __webpack_require__(573);
+	var HTML5Backend = __webpack_require__(574);
 	
 	var _require2 = __webpack_require__(513);
 	
@@ -38372,7 +38384,6 @@
 	
 	      var Component = componentMap(components[_id].type);
 	
-	      console.log(rest);
 	      return React.createElement(
 	        Component,
 	        _extends({}, rest, { key: index, 'data-id': _id }),
@@ -47601,9 +47612,11 @@
 	
 	var dropSpec = {
 	  drop: function drop(props, monitor, component) {
+	    if (monitor.didDrop()) return;
+	
 	    var dropped = monitor.getItem();
 	    props.dispatch(_extends({}, dropped, { parent: { id: props['data-id'] } }));
-	    console.log('PROPS[data-id]: ', props['data-id'], 'DROPPED: ', dropped, 'COMP: ', component);
+	    //console.log('PROPS[data-id]: ', props['data-id'],'DROPPED: ', dropped, 'COMP: ', component);
 	  }
 	};
 	
@@ -47684,7 +47697,6 @@
 	    return connectDragSource(React.createElement(
 	      'div',
 	      {
-	        'data-dragging': isDragging,
 	        className: isDragging ? 'draggable dragging' : 'draggable',
 	        style: { opacity: isDragging ? 0.5 : 1 }
 	      },
@@ -51532,7 +51544,8 @@
 	var defaultDropCollect = function defaultDropCollect(connect, monitor) {
 	  return {
 	    connectDropTarget: connect.dropTarget(),
-	    isOver: monitor.isOver()
+	    isOver: monitor.isOver({ shallow: true }),
+	    canDrop: monitor.canDrop()
 	  };
 	};
 	
@@ -51544,12 +51557,13 @@
 	    var connectDropTarget = _props.connectDropTarget;
 	    var isOver = _props.isOver;
 	    var children = _props.children;
+	    var canDrop = _props.canDrop;
 	
 	
 	    return connectDropTarget(React.createElement(
 	      'div',
 	      {
-	        className: isOver ? 'clearfix hoverable hovered' : 'clearfix hoverable'
+	        className: 'clearfix hoverable' + (isOver ? ' hovered' : '') + (canDrop ? ' droppable' : '')
 	      },
 	      children
 	    ));
@@ -51587,9 +51601,11 @@
 	
 	var dropSpec = {
 	  drop: function drop(props, monitor, component) {
+	    if (monitor.didDrop()) return;
+	
 	    var dropped = monitor.getItem();
 	    props.dispatch(_extends({}, dropped, { parent: { id: props['data-id'] } }));
-	    console.log('PROPS: ', props, 'DROPPED: ', dropped, 'COMP: ', component);
+	    //console.log('PROPS: ', props,'DROPPED: ', dropped, 'COMP: ', component);
 	  }
 	};
 	
@@ -51635,9 +51651,11 @@
 	
 	var dropSpec = {
 	  drop: function drop(props, monitor, component) {
+	    if (monitor.didDrop()) return;
+	
 	    var dropped = monitor.getItem();
 	    props.dispatch(_extends({}, dropped, { parent: { id: props['data-id'] } }));
-	    console.log('PROPS: ', props, 'DROPPED: ', dropped, 'COMP: ', component);
+	    //console.log('PROPS: ', props,'DROPPED: ', dropped, 'COMP: ', component);
 	  }
 	};
 	
@@ -51665,6 +51683,8 @@
 
 	'use strict';
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 	
 	var React = __webpack_require__(80);
@@ -51681,13 +51701,16 @@
 	
 	var dropSpec = {
 	  drop: function drop(props, monitor, component) {
+	    if (monitor.didDrop()) return;
+	
 	    var dropped = monitor.getItem();
-	    //props.dispatch({...dropped, parent: {id: props['data-id']}});
-	    console.log('PROPS: ', props, 'DROPPED: ', dropped, 'COMP: ', component);
+	    props.dispatch(_extends({}, dropped, { parent: { id: props['data-id'] } }));
+	
+	    //console.log('PROPS: ', props,'DROPPED: ', dropped, 'COMP: ', component);
 	  }
 	};
 	
-	var Drop = createDroppable('h1', dropSpec);
+	var Drop = createDroppable(['h1', 'Row'], dropSpec);
 	
 	module.exports = function (_ref) {
 	  var children = _ref.children;
@@ -51704,8 +51727,7 @@
 	      children.length ? children : React.createElement(
 	        'div',
 	        { className: 'empty' },
-	        'DROP ITEMS HERE',
-	        console.log(rest)
+	        'DROP ITEMS HERE'
 	      )
 	    )
 	  );
@@ -51716,10 +51738,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 	
 	var React = __webpack_require__(80);
 	
@@ -51735,45 +51753,13 @@
 	var Nav = _require2.Nav;
 	var NavItem = _require2.NavItem;
 	
+	var _require3 = __webpack_require__(573);
 	
-	var uuid = __webpack_require__(260);
+	var Container = _require3.Container;
+	var Row = _require3.Row;
+	var Col = _require3.Col;
+	var H1 = _require3.H1;
 	
-	var dragContainerSpec = {
-	  beginDrag: function beginDrag(_ref) {
-	    var children = _ref.children;
-	
-	    var rest = _objectWithoutProperties(_ref, ['children']);
-	
-	    return { type: 'ADD_COMPONENT', component: _extends({ id: uuid(), type: 'Container', children: [] }, rest) };
-	  }
-	};
-	var DragContainer = createDraggable('Container', dragContainerSpec);
-	
-	var dragRowSpec = {
-	  beginDrag: function beginDrag(_ref2) {
-	    var children = _ref2.children;
-	
-	    var rest = _objectWithoutProperties(_ref2, ['children']);
-	
-	    return { type: 'ADD_COMPONENT', component: _extends({ id: uuid(), type: 'Row', children: [] }, rest) };
-	  }
-	};
-	var DragRow = createDraggable('Row', dragRowSpec);
-	
-	var dragColSpec = {
-	  beginDrag: function beginDrag(_ref3) {
-	    var children = _ref3.children;
-	
-	    var rest = _objectWithoutProperties(_ref3, ['children']);
-	
-	    return {
-	      type: 'ADD_COMPONENT',
-	      component: _extends({ id: uuid(), type: 'Col', children: [] }, rest)
-	    };
-	  }
-	};
-	
-	var DragCol = createDraggable('Col', dragColSpec);
 	
 	var Toolbar = function Toolbar() {
 	  return React.createElement(
@@ -51791,8 +51777,8 @@
 	        NavItem,
 	        null,
 	        React.createElement(
-	          DragContainer,
-	          { fluid: true },
+	          Container,
+	          null,
 	          'Container'
 	        )
 	      ),
@@ -51800,7 +51786,7 @@
 	        NavItem,
 	        null,
 	        React.createElement(
-	          DragRow,
+	          Row,
 	          null,
 	          'Row'
 	        )
@@ -51809,9 +51795,18 @@
 	        NavItem,
 	        null,
 	        React.createElement(
-	          DragCol,
+	          Col,
 	          { xs: '4' },
 	          'Col'
+	        )
+	      ),
+	      React.createElement(
+	        NavItem,
+	        null,
+	        React.createElement(
+	          H1,
+	          { children: 'Hello World' },
+	          'h1'
 	        )
 	      )
 	    )
@@ -51826,6 +51821,51 @@
 
 	'use strict';
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	var uuid = __webpack_require__(260);
+	
+	var _require = __webpack_require__(511);
+	
+	var createDraggable = _require.createDraggable;
+	
+	
+	var type = 'Container';
+	
+	var createSpec = function createSpec(type, contents) {
+	  return {
+	    beginDrag: function beginDrag(_ref) {
+	      var children = _ref.children;
+	
+	      var rest = _objectWithoutProperties(_ref, ['children']);
+	
+	      return { type: 'ADD_COMPONENT', component: _extends({ id: uuid(), type: type, children: [].concat(_toConsumableArray(contents)) }, rest) };
+	    }
+	  };
+	};
+	
+	var createTool = function createTool(type) {
+	  var contents = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+	  return createDraggable(type, createSpec(type, contents));
+	};
+	
+	module.exports = {
+	  Col: createTool('Col'),
+	  Container: createTool('Container'),
+	  Row: createTool('Row'),
+	  H1: createTool('h1', ['Lorem Ipsum'])
+	};
+
+/***/ },
+/* 574 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	exports.__esModule = true;
 	exports['default'] = createHTML5Backend;
 	
@@ -51833,15 +51873,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _HTML5Backend = __webpack_require__(574);
+	var _HTML5Backend = __webpack_require__(575);
 	
 	var _HTML5Backend2 = _interopRequireDefault(_HTML5Backend);
 	
-	var _getEmptyImage = __webpack_require__(589);
+	var _getEmptyImage = __webpack_require__(590);
 	
 	var _getEmptyImage2 = _interopRequireDefault(_getEmptyImage);
 	
-	var _NativeTypes = __webpack_require__(588);
+	var _NativeTypes = __webpack_require__(589);
 	
 	var NativeTypes = _interopRequireWildcard(_NativeTypes);
 	
@@ -51853,7 +51893,7 @@
 	}
 
 /***/ },
-/* 574 */
+/* 575 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51866,25 +51906,25 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _lodashDefaults = __webpack_require__(575);
+	var _lodashDefaults = __webpack_require__(576);
 	
 	var _lodashDefaults2 = _interopRequireDefault(_lodashDefaults);
 	
-	var _shallowEqual = __webpack_require__(581);
+	var _shallowEqual = __webpack_require__(582);
 	
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 	
-	var _EnterLeaveCounter = __webpack_require__(582);
+	var _EnterLeaveCounter = __webpack_require__(583);
 	
 	var _EnterLeaveCounter2 = _interopRequireDefault(_EnterLeaveCounter);
 	
-	var _BrowserDetector = __webpack_require__(584);
+	var _BrowserDetector = __webpack_require__(585);
 	
-	var _OffsetUtils = __webpack_require__(585);
+	var _OffsetUtils = __webpack_require__(586);
 	
-	var _NativeDragSources = __webpack_require__(587);
+	var _NativeDragSources = __webpack_require__(588);
 	
-	var _NativeTypes = __webpack_require__(588);
+	var _NativeTypes = __webpack_require__(589);
 	
 	var NativeTypes = _interopRequireWildcard(_NativeTypes);
 	
@@ -52434,12 +52474,12 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 575 */
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var apply = __webpack_require__(233),
-	    assignInDefaults = __webpack_require__(576),
-	    assignInWith = __webpack_require__(577),
+	    assignInDefaults = __webpack_require__(577),
+	    assignInWith = __webpack_require__(578),
 	    baseRest = __webpack_require__(231);
 	
 	/**
@@ -52472,7 +52512,7 @@
 
 
 /***/ },
-/* 576 */
+/* 577 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var eq = __webpack_require__(125);
@@ -52505,12 +52545,12 @@
 
 
 /***/ },
-/* 577 */
+/* 578 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var copyObject = __webpack_require__(229),
 	    createAssigner = __webpack_require__(230),
-	    keysIn = __webpack_require__(578);
+	    keysIn = __webpack_require__(579);
 	
 	/**
 	 * This method is like `_.assignIn` except that it accepts `customizer`
@@ -52549,11 +52589,11 @@
 
 
 /***/ },
-/* 578 */
+/* 579 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayLikeKeys = __webpack_require__(175),
-	    baseKeysIn = __webpack_require__(579),
+	    baseKeysIn = __webpack_require__(580),
 	    isArrayLike = __webpack_require__(179);
 	
 	/**
@@ -52587,12 +52627,12 @@
 
 
 /***/ },
-/* 579 */
+/* 580 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(138),
 	    isPrototype = __webpack_require__(185),
-	    nativeKeysIn = __webpack_require__(580);
+	    nativeKeysIn = __webpack_require__(581);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -52626,7 +52666,7 @@
 
 
 /***/ },
-/* 580 */
+/* 581 */
 /***/ function(module, exports) {
 
 	/**
@@ -52652,7 +52692,7 @@
 
 
 /***/ },
-/* 581 */
+/* 582 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -52693,7 +52733,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 582 */
+/* 583 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52704,7 +52744,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _lodashUnion = __webpack_require__(583);
+	var _lodashUnion = __webpack_require__(584);
 	
 	var _lodashUnion2 = _interopRequireDefault(_lodashUnion);
 	
@@ -52750,7 +52790,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 583 */
+/* 584 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseFlatten = __webpack_require__(248),
@@ -52782,7 +52822,7 @@
 
 
 /***/ },
-/* 584 */
+/* 585 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52807,7 +52847,7 @@
 	exports.isSafari = isSafari;
 
 /***/ },
-/* 585 */
+/* 586 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52819,9 +52859,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _BrowserDetector = __webpack_require__(584);
+	var _BrowserDetector = __webpack_require__(585);
 	
-	var _MonotonicInterpolant = __webpack_require__(586);
+	var _MonotonicInterpolant = __webpack_require__(587);
 	
 	var _MonotonicInterpolant2 = _interopRequireDefault(_MonotonicInterpolant);
 	
@@ -52907,7 +52947,7 @@
 	}
 
 /***/ },
-/* 586 */
+/* 587 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -53024,7 +53064,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 587 */
+/* 588 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53042,7 +53082,7 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var _NativeTypes = __webpack_require__(588);
+	var _NativeTypes = __webpack_require__(589);
 	
 	var NativeTypes = _interopRequireWildcard(_NativeTypes);
 	
@@ -53132,7 +53172,7 @@
 	}
 
 /***/ },
-/* 588 */
+/* 589 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -53146,7 +53186,7 @@
 	exports.TEXT = TEXT;
 
 /***/ },
-/* 589 */
+/* 590 */
 /***/ function(module, exports) {
 
 	'use strict';
