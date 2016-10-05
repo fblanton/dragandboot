@@ -1,5 +1,6 @@
 const React = require('react');
 const componentMap = require('./componentMap');
+const Connected = require('./connected');
 
 const expandChildren = (children, components) => children.map(
   (child, index) => {
