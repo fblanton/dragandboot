@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "391ddc25c19b5578834b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e827eb53deda76fb7f7e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -37542,13 +37542,17 @@
 	    case 'ADD_COMPONENT':
 	      var newState = _extends({}, state);
 	
+	      // add this component's id to it's parent's children array
 	      if (typeof action.parent !== 'undefined' && typeof state[action.parent.id] !== 'undefined') {
-	        var parent = _extends({}, state[action.parent.id], {
-	          children: [].concat(_toConsumableArray(state[action.parent.id].children), [{ id: action.component.id }])
+	        var id = action.parent.id;
+	        var oldParent = state[id];
+	        var newParent = _extends({}, oldParent, {
+	          children: [].concat(_toConsumableArray(oldParent.children), [{ id: action.component.id }])
 	        });
-	        newState = _extends({}, newState, _defineProperty({}, action.parent.id, parent));
+	        newState = _extends({}, newState, _defineProperty({}, id, newParent));
 	      }
 	
+	      // then add this component to the state
 	      return _extends({}, newState, _defineProperty({}, action.component.id, action.component));
 	    default:
 	      return state;
@@ -37570,8 +37574,8 @@
 	var Provider = _require.Provider;
 	
 	var DragApp = __webpack_require__(433);
-	var Toolbar = __webpack_require__(572);
-	var HTML5Backend = __webpack_require__(574);
+	var Toolbar = __webpack_require__(575);
+	var HTML5Backend = __webpack_require__(577);
 	
 	var _require2 = __webpack_require__(513);
 	
@@ -38366,6 +38370,7 @@
 	
 	var React = __webpack_require__(80);
 	var componentMap = __webpack_require__(435);
+	var Connected = __webpack_require__(574);
 	
 	var expandChildren = function expandChildren(children, components) {
 	  return children.map(function (child, index) {
@@ -38409,12 +38414,14 @@
 	var React = __webpack_require__(80);
 	var R = __webpack_require__(436);
 	var DND = __webpack_require__(509);
-	
+	window.R = R;
 	module.exports = function (item) {
 	  var components = {
 	    Container: DND.Container,
 	    Row: DND.Row,
 	    Col: DND.Col,
+	    Jumbotron: DND.Jumbotron,
+	    JumbotronFluid: DND.JumbotronFluid,
 	    Page: DND.Page
 	  };
 	
@@ -47585,7 +47592,9 @@
 	  Container: __webpack_require__(510),
 	  Row: __webpack_require__(569),
 	  Page: __webpack_require__(570),
-	  Col: __webpack_require__(571)
+	  Col: __webpack_require__(571),
+	  Jumbotron: __webpack_require__(572),
+	  JumbotronFluid: __webpack_require__(573)
 	};
 
 /***/ },
@@ -47620,7 +47629,7 @@
 	  }
 	};
 	
-	var Drop = createDroppable('Row', dropSpec);
+	var Drop = createDroppable(['Row', 'Jumbotron'], dropSpec);
 	
 	module.exports = function (_ref) {
 	  var children = _ref.children;
@@ -51659,7 +51668,7 @@
 	  }
 	};
 	
-	var Drop = createDroppable('Container', dropSpec);
+	var Drop = createDroppable(['Container', 'JumbotronFluid'], dropSpec);
 	
 	module.exports = function (_ref) {
 	  var children = _ref.children;
@@ -51710,7 +51719,7 @@
 	  }
 	};
 	
-	var Drop = createDroppable(['h1', 'Row'], dropSpec);
+	var Drop = createDroppable(['h1', 'h3', 'Row', 'p'], dropSpec);
 	
 	module.exports = function (_ref) {
 	  var children = _ref.children;
@@ -51739,6 +51748,133 @@
 
 	'use strict';
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	var React = __webpack_require__(80);
+	
+	var _require = __webpack_require__(436);
+	
+	var Jumbotron = _require.Jumbotron;
+	
+	var _require2 = __webpack_require__(511);
+	
+	var createDraggable = _require2.createDraggable;
+	var createDroppable = _require2.createDroppable;
+	
+	
+	var dropSpec = {
+	  drop: function drop(props, monitor, component) {
+	    if (monitor.didDrop()) return;
+	
+	    var dropped = monitor.getItem();
+	    props.dispatch(_extends({}, dropped, { parent: { id: props['data-id'] } }));
+	    //console.log('PROPS[data-id]: ', props['data-id'],'DROPPED: ', dropped, 'COMP: ', component);
+	  }
+	};
+	
+	var Drop = createDroppable(['h1', 'p'], dropSpec);
+	
+	module.exports = function (_ref) {
+	  var children = _ref.children;
+	  var id = _ref['data-id'];
+	
+	  var rest = _objectWithoutProperties(_ref, ['children', 'data-id']);
+	
+	  return React.createElement(
+	    Jumbotron,
+	    rest,
+	    React.createElement(
+	      Drop,
+	      { 'data-id': id },
+	      children.length ? children : React.createElement(
+	        'div',
+	        { className: 'empty' },
+	        'DROP HEADERS AND PARAGRAPHS HERE'
+	      )
+	    )
+	  );
+	};
+
+/***/ },
+/* 573 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	var React = __webpack_require__(80);
+	
+	var _require = __webpack_require__(436);
+	
+	var Jumbotron = _require.Jumbotron;
+	
+	var _require2 = __webpack_require__(511);
+	
+	var createDraggable = _require2.createDraggable;
+	var createDroppable = _require2.createDroppable;
+	
+	
+	var dropSpec = {
+	  drop: function drop(props, monitor, component) {
+	    if (monitor.didDrop()) return;
+	
+	    var dropped = monitor.getItem();
+	    props.dispatch(_extends({}, dropped, { parent: { id: props['data-id'] } }));
+	    //console.log('PROPS[data-id]: ', props['data-id'],'DROPPED: ', dropped, 'COMP: ', component);
+	  }
+	};
+	
+	var Drop = createDroppable(['Container', 'ContainerFluid'], dropSpec);
+	
+	module.exports = function (_ref) {
+	  var children = _ref.children;
+	  var id = _ref['data-id'];
+	
+	  var rest = _objectWithoutProperties(_ref, ['children', 'data-id']);
+	
+	  return React.createElement(
+	    Jumbotron,
+	    _extends({}, rest, { fluid: true }),
+	    React.createElement(
+	      Drop,
+	      { 'data-id': id },
+	      children.length ? children : React.createElement(
+	        'div',
+	        { className: 'empty' },
+	        'FLUID - DROP CONTAINERS HERE'
+	      )
+	    )
+	  );
+	};
+
+/***/ },
+/* 574 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(80);
+	
+	var _require = __webpack_require__(424);
+	
+	var connect = _require.connect;
+	
+	
+	module.exports = function (Component) {
+	  return connect()(React.createElement(Component, null));
+	};
+
+/***/ },
+/* 575 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	var React = __webpack_require__(80);
 	
 	var _require = __webpack_require__(511);
@@ -51753,12 +51889,16 @@
 	var Nav = _require2.Nav;
 	var NavItem = _require2.NavItem;
 	
-	var _require3 = __webpack_require__(573);
+	var _require3 = __webpack_require__(576);
 	
 	var Container = _require3.Container;
 	var Row = _require3.Row;
 	var Col = _require3.Col;
 	var H1 = _require3.H1;
+	var H3 = _require3.H3;
+	var P = _require3.P;
+	var Jumbotron = _require3.Jumbotron;
+	var JumbotronFluid = _require3.JumbotronFluid;
 	
 	
 	var Toolbar = function Toolbar() {
@@ -51805,8 +51945,44 @@
 	        null,
 	        React.createElement(
 	          H1,
-	          { children: 'Hello World' },
-	          'h1'
+	          null,
+	          'Header'
+	        )
+	      ),
+	      React.createElement(
+	        NavItem,
+	        null,
+	        React.createElement(
+	          H3,
+	          null,
+	          'Small Header'
+	        )
+	      ),
+	      React.createElement(
+	        NavItem,
+	        null,
+	        React.createElement(
+	          P,
+	          null,
+	          'Paragraph'
+	        )
+	      ),
+	      React.createElement(
+	        NavItem,
+	        null,
+	        React.createElement(
+	          Jumbotron,
+	          null,
+	          'Jumbotron'
+	        )
+	      ),
+	      React.createElement(
+	        NavItem,
+	        null,
+	        React.createElement(
+	          JumbotronFluid,
+	          null,
+	          'Jumbotron Fluid'
 	        )
 	      )
 	    )
@@ -51816,7 +51992,7 @@
 	module.exports = Toolbar;
 
 /***/ },
-/* 573 */
+/* 576 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51857,11 +52033,15 @@
 	  Col: createTool('Col'),
 	  Container: createTool('Container'),
 	  Row: createTool('Row'),
-	  H1: createTool('h1', ['Lorem Ipsum'])
+	  H1: createTool('h1', ['Lorem Ipsum']),
+	  H3: createTool('h3', ['Dolor Sit']),
+	  P: createTool('p', ['Consectetur <i>adipiscing</i> elit. Nulla vitae dolor at sem dignissim maximus. In semper enim nec quam maximus, nec venenatis justo dignissim.']),
+	  Jumbotron: createTool('Jumbotron'),
+	  JumbotronFluid: createTool('JumbotronFluid')
 	};
 
 /***/ },
-/* 574 */
+/* 577 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51873,15 +52053,15 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _HTML5Backend = __webpack_require__(575);
+	var _HTML5Backend = __webpack_require__(578);
 	
 	var _HTML5Backend2 = _interopRequireDefault(_HTML5Backend);
 	
-	var _getEmptyImage = __webpack_require__(590);
+	var _getEmptyImage = __webpack_require__(593);
 	
 	var _getEmptyImage2 = _interopRequireDefault(_getEmptyImage);
 	
-	var _NativeTypes = __webpack_require__(589);
+	var _NativeTypes = __webpack_require__(592);
 	
 	var NativeTypes = _interopRequireWildcard(_NativeTypes);
 	
@@ -51893,7 +52073,7 @@
 	}
 
 /***/ },
-/* 575 */
+/* 578 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51906,25 +52086,25 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _lodashDefaults = __webpack_require__(576);
+	var _lodashDefaults = __webpack_require__(579);
 	
 	var _lodashDefaults2 = _interopRequireDefault(_lodashDefaults);
 	
-	var _shallowEqual = __webpack_require__(582);
+	var _shallowEqual = __webpack_require__(585);
 	
 	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
 	
-	var _EnterLeaveCounter = __webpack_require__(583);
+	var _EnterLeaveCounter = __webpack_require__(586);
 	
 	var _EnterLeaveCounter2 = _interopRequireDefault(_EnterLeaveCounter);
 	
-	var _BrowserDetector = __webpack_require__(585);
+	var _BrowserDetector = __webpack_require__(588);
 	
-	var _OffsetUtils = __webpack_require__(586);
+	var _OffsetUtils = __webpack_require__(589);
 	
-	var _NativeDragSources = __webpack_require__(588);
+	var _NativeDragSources = __webpack_require__(591);
 	
-	var _NativeTypes = __webpack_require__(589);
+	var _NativeTypes = __webpack_require__(592);
 	
 	var NativeTypes = _interopRequireWildcard(_NativeTypes);
 	
@@ -52474,12 +52654,12 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 576 */
+/* 579 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var apply = __webpack_require__(233),
-	    assignInDefaults = __webpack_require__(577),
-	    assignInWith = __webpack_require__(578),
+	    assignInDefaults = __webpack_require__(580),
+	    assignInWith = __webpack_require__(581),
 	    baseRest = __webpack_require__(231);
 	
 	/**
@@ -52512,7 +52692,7 @@
 
 
 /***/ },
-/* 577 */
+/* 580 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var eq = __webpack_require__(125);
@@ -52545,12 +52725,12 @@
 
 
 /***/ },
-/* 578 */
+/* 581 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var copyObject = __webpack_require__(229),
 	    createAssigner = __webpack_require__(230),
-	    keysIn = __webpack_require__(579);
+	    keysIn = __webpack_require__(582);
 	
 	/**
 	 * This method is like `_.assignIn` except that it accepts `customizer`
@@ -52589,11 +52769,11 @@
 
 
 /***/ },
-/* 579 */
+/* 582 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayLikeKeys = __webpack_require__(175),
-	    baseKeysIn = __webpack_require__(580),
+	    baseKeysIn = __webpack_require__(583),
 	    isArrayLike = __webpack_require__(179);
 	
 	/**
@@ -52627,12 +52807,12 @@
 
 
 /***/ },
-/* 580 */
+/* 583 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(138),
 	    isPrototype = __webpack_require__(185),
-	    nativeKeysIn = __webpack_require__(581);
+	    nativeKeysIn = __webpack_require__(584);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -52666,7 +52846,7 @@
 
 
 /***/ },
-/* 581 */
+/* 584 */
 /***/ function(module, exports) {
 
 	/**
@@ -52692,7 +52872,7 @@
 
 
 /***/ },
-/* 582 */
+/* 585 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -52733,7 +52913,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 583 */
+/* 586 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52744,7 +52924,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _lodashUnion = __webpack_require__(584);
+	var _lodashUnion = __webpack_require__(587);
 	
 	var _lodashUnion2 = _interopRequireDefault(_lodashUnion);
 	
@@ -52790,7 +52970,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 584 */
+/* 587 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseFlatten = __webpack_require__(248),
@@ -52822,7 +53002,7 @@
 
 
 /***/ },
-/* 585 */
+/* 588 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52847,7 +53027,7 @@
 	exports.isSafari = isSafari;
 
 /***/ },
-/* 586 */
+/* 589 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -52859,9 +53039,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _BrowserDetector = __webpack_require__(585);
+	var _BrowserDetector = __webpack_require__(588);
 	
-	var _MonotonicInterpolant = __webpack_require__(587);
+	var _MonotonicInterpolant = __webpack_require__(590);
 	
 	var _MonotonicInterpolant2 = _interopRequireDefault(_MonotonicInterpolant);
 	
@@ -52947,7 +53127,7 @@
 	}
 
 /***/ },
-/* 587 */
+/* 590 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -53064,7 +53244,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 588 */
+/* 591 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53082,7 +53262,7 @@
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 	
-	var _NativeTypes = __webpack_require__(589);
+	var _NativeTypes = __webpack_require__(592);
 	
 	var NativeTypes = _interopRequireWildcard(_NativeTypes);
 	
@@ -53172,7 +53352,7 @@
 	}
 
 /***/ },
-/* 589 */
+/* 592 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -53186,7 +53366,7 @@
 	exports.TEXT = TEXT;
 
 /***/ },
-/* 590 */
+/* 593 */
 /***/ function(module, exports) {
 
 	'use strict';
