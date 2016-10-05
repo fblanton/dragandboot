@@ -5,21 +5,23 @@ const { Navbar, NavbarBrand, Nav, NavItem } = require('reactstrap');
 const uuid = require('uuid-v4');
 
 const dragContainerSpec = {
-  beginDrag: () => ({type: 'ADD_COMPONENT', component: {id: uuid(), type: 'Container', children: []}})
+  beginDrag: ({children, ...rest}) => ({type: 'ADD_COMPONENT', component: {id: uuid(), type: 'Container', children: [], ...rest}})
 }
 const DragContainer = createDraggable('Container', dragContainerSpec);
 
 const dragRowSpec = {
-  beginDrag: () => ({type: 'ADD_COMPONENT', component: {id: uuid(), type: 'Row', children: []}})
+  beginDrag: ({children, ...rest}) => {
+    return ({type: 'ADD_COMPONENT', component: {id: uuid(), type: 'Row', children: [], ...rest}})}
 }
 const DragRow = createDraggable('Row', dragRowSpec);
 
 const dragColSpec = {
-  beginDrag: ({style, children, ...rest}) => {
-    console.log(rest);
-    return ({type: 'ADD_COMPONENT', component: {id: uuid(), type: 'Col', children: [], ...rest}});
-  }
+  beginDrag: ({children, ...rest}) => ({
+    type: 'ADD_COMPONENT',
+    component: {id: uuid(), type: 'Col', children: [], ...rest}
+  })
 }
+
 const DragCol = createDraggable('Col', dragColSpec);
 
 const Toolbar = () =>
@@ -27,17 +29,17 @@ const Toolbar = () =>
     <NavbarBrand>Dragn Boot</NavbarBrand>
     <Nav navbar>
       <NavItem>
-        <DragContainer style={{ display: 'inline-block' }}>
+        <DragContainer fluid>
           Container
         </DragContainer>
       </NavItem>
       <NavItem>
-        <DragRow style={{ display: 'inline-block' }}>
+        <DragRow>
           Row
         </DragRow>
       </NavItem>
       <NavItem>
-        <DragCol xs='6' style={{ display: 'inline-block' }}>
+        <DragCol xs='4'>
           Col
         </DragCol>
       </NavItem>

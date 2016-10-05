@@ -5,14 +5,15 @@ const expandChildren = (children, components) => children.map(
   (child, index) => {
     if (typeof child === 'string') return child;
 
-    const { id } = child;
+    const { id: childID } = child;
 
-    if (typeof components[id] !== 'undefined') {
+    if (typeof components[childID] !== 'undefined') {
+      const { children, type, id: id, ...rest } = components[childID];
       const Component = componentMap(components[id].type);
-      const { children } = components[id];
 
+      console.log(rest);
       return (
-        <Component key={ index } data-id={ id }>
+        <Component {...rest} key={ index } data-id={ id }>
           { expandChildren(children, components) }
         </Component>
       );

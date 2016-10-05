@@ -14,13 +14,13 @@ const defaultDragCollect = (connect, monitor) => ({
 
 const Draggable = React.createClass({
   render: function() {
-    const { connectDragSource, isDragging, children, style } = this.props;
+    const { connectDragSource, isDragging, children } = this.props;
 
     return connectDragSource(
       <div
         data-dragging={ isDragging }
         className={ isDragging ? 'draggable dragging' : 'draggable' }
-        style={{ ...style, opacity: (isDragging ? 0.5 : 1) }}
+        style={{opacity: (isDragging ? 0.5 : 1) }}
       >
         { children }
       </div>

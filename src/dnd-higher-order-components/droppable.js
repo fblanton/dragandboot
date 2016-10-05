@@ -16,12 +16,11 @@ const defaultDropCollect = (connect, monitor) => ({
 
 const Droppable = React.createClass({
   render: function() {
-    const { connectDropTarget, isOver, children, style, className } = this.props;
+    const { connectDropTarget, isOver, children } = this.props;
 
     return connectDropTarget(
       <div
-        className= { (isOver ? 'hoverable hovered' : 'hoverable') + ( (className) ? (' ' + className) : '') }
-        style={{ ...style }}
+        className= { (isOver ? 'clearfix hoverable hovered' : 'clearfix hoverable') }
       >
         { children }
       </div>
