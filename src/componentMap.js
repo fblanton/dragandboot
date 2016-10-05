@@ -7,6 +7,8 @@ module.exports = item => {
     Container: DND.Container,
     Row: DND.Row,
     Col: DND.Col,
+    Jumbotron: DND.Jumbotron,
+    JumbotronFluid: DND.JumbotronFluid,
     Page: DND.Page
   };
 

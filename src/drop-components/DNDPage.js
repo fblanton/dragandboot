@@ -4,14 +4,14 @@ const { createDroppable } = require('../dnd-higher-order-components');
 const dropSpec = {
   drop: (props, monitor, component) => {
     if (monitor.didDrop()) return;
-    
+
     const dropped = monitor.getItem();
     props.dispatch({...dropped, parent: {id: props['data-id']}});
     //console.log('PROPS: ', props,'DROPPED: ', dropped, 'COMP: ', component);
   }
 };
 
-const Drop = createDroppable('Container', dropSpec);
+const Drop = createDroppable(['Container', 'JumbotronFluid'], dropSpec);
 
 module.exports = ({children, ...rest}) =>
   <Drop className='page' {...rest}>

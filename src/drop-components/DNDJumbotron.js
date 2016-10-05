@@ -1,5 +1,5 @@
 const React = require('react');
-const { Col } = require('reactstrap');
+const { Jumbotron } = require('reactstrap');
 const { createDraggable, createDroppable } = require('../dnd-higher-order-components');
 
 const dropSpec = {
@@ -8,16 +8,15 @@ const dropSpec = {
 
     const dropped = monitor.getItem();
     props.dispatch({...dropped, parent: {id: props['data-id']}});
-
-    //console.log('PROPS: ', props,'DROPPED: ', dropped, 'COMP: ', component);
+    //console.log('PROPS[data-id]: ', props['data-id'],'DROPPED: ', dropped, 'COMP: ', component);
   }
 };
 
-const Drop = createDroppable(['h1', 'h3', 'Row', 'p'], dropSpec);
+const Drop = createDroppable(['h1', 'p'], dropSpec);
 
 module.exports = ({children, ['data-id']: id, ...rest}) =>
-  <Col {...rest}>
+  <Jumbotron {...rest}>
     <Drop data-id={ id }>
-      { children.length ? children : <div className='empty'>DROP ITEMS HERE</div> }
+      { children.length ? children : <div className='empty'>DROP HEADERS AND PARAGRAPHS HERE</div> }
     </Drop>
-  </Col>;
+  </Jumbotron>;
