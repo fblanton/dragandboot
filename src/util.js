@@ -11,7 +11,6 @@ const expandChildren = (children, components) => children.map(
       const { children, type, id: id, ...rest } = components[childID];
       const Component = componentMap(components[id].type);
 
-      console.log(rest);
       return (
         <Component {...rest} key={ index } data-id={ id }>
           { expandChildren(children, components) }

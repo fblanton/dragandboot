@@ -1,20 +1,22 @@
 const React = require('react');
-const { Container } = require('reactstrap');
+const { Row } = require('reactstrap');
 const { createDraggable, createDroppable } = require('../dnd-higher-order-components');
 
 const dropSpec = {
   drop: (props, monitor, component) => {
+    if (monitor.didDrop()) return;
+
     const dropped = monitor.getItem();
     props.dispatch({...dropped, parent: {id: props['data-id']}});
-    console.log('PROPS[data-id]: ', props['data-id'],'DROPPED: ', dropped, 'COMP: ', component);
+    //console.log('PROPS: ', props,'DROPPED: ', dropped, 'COMP: ', component);
   }
 };
 
-const Drop = createDroppable('Row', dropSpec);
+const Drop = createDroppable('Col', dropSpec);
 
 module.exports = ({children, ['data-id']: id, ...rest}) =>
-  <Container {...rest}>
+  <Row {...rest}>
     <Drop data-id={ id }>
-      { children.length ? children : <div className='empty'>DROP ROWS HERE</div> }
+      { children.length ? children : <div className='empty'>DROP COLS HERE</div> }
     </Drop>
-  </Container>;
+  </Row>;

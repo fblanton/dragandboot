@@ -1,6 +1,6 @@
 const React = require('react');
 const R = require('reactstrap');
-const DND = require('./dnd-components');
+const DND = require('./drop-components');
 
 module.exports = item => {
   const components = {

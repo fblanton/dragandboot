@@ -3,10 +3,6 @@
   width: 100px;
 }*/
 
-.hovered {
-  background-color: rgb(200,230,200);
-}
-
 .page {
   height: 100vh;
   overflow: scroll;
@@ -15,14 +11,18 @@
 .empty {
   line-height: 5em;
   text-align: center;
-  background-color: lightgray;
   border-style: dashed;
   border-radius: .3em;
   border-color: gray;
 }
 
-.hovered .empty {
-  background-color: rgb(200,230,200);
+.droppable {
+  background-color: rgba(230,230,200,.5);
+  padding: 1em;
+}
+
+.hovered {
+  background-color: rgba(200,230,200,.5);
 }
 
 .page .empty {

@@ -3,9 +3,11 @@ const { createDroppable } = require('../dnd-higher-order-components');
 
 const dropSpec = {
   drop: (props, monitor, component) => {
+    if (monitor.didDrop()) return;
+    
     const dropped = monitor.getItem();
     props.dispatch({...dropped, parent: {id: props['data-id']}});
-    console.log('PROPS: ', props,'DROPPED: ', dropped, 'COMP: ', component);
+    //console.log('PROPS: ', props,'DROPPED: ', dropped, 'COMP: ', component);
   }
 };
 

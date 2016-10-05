@@ -10,6 +10,15 @@ const activePage = (state = '', action) => {
   }
 }
 
+const visibleTools = (state = 'all', action) => {
+  switch (action.type) {
+    case 'TOOL_VISIBILITY':
+      return action.visible;
+    default:
+      return state;
+  }
+}
+
 const components = (state = {}, action) => {
   switch (action.type) {
     case 'ADD_COMPONENT':
@@ -33,4 +42,4 @@ const components = (state = {}, action) => {
   }
 };
 
-module.exports = combineReducers({ activePage, components });
+module.exports = combineReducers({ activePage, components, visibleTools });

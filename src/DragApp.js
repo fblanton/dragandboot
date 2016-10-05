@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { expandChildren } = require('./util');
-const { Page } = require('./dnd-components');
+const { Page } = require('./drop-components');
 
 const mapStateToProps = state => ({
   activePage: state.activePage,

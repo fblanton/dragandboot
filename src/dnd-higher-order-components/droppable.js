@@ -11,16 +11,21 @@ const defaultDropSpec = {
 
 const defaultDropCollect = (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver()
+  isOver: monitor.isOver({shallow: true}),
+  canDrop: monitor.canDrop()
 });
 
 const Droppable = React.createClass({
   render: function() {
-    const { connectDropTarget, isOver, children } = this.props;
+    const { connectDropTarget, isOver, children, canDrop } = this.props;
 
     return connectDropTarget(
       <div
-        className= { (isOver ? 'clearfix hoverable hovered' : 'clearfix hoverable') }
+        className= {
+          'clearfix hoverable' +
+          (isOver ? ' hovered' : '') +
+          (canDrop ? ' droppable' : '')
+        }
       >
         { children }
       </div>

@@ -18,7 +18,6 @@ const Draggable = React.createClass({
 
     return connectDragSource(
       <div
-        data-dragging={ isDragging }
         className={ isDragging ? 'draggable dragging' : 'draggable' }
         style={{opacity: (isDragging ? 0.5 : 1) }}
       >
