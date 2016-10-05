@@ -24,18 +24,20 @@ const components = (state = {}, action) => {
     case 'ADD_COMPONENT':
       let newState = {...state};
 
+      // add this component's id to it's parent's children array
       if (
         typeof action.parent !== 'undefined' &&
         typeof state[action.parent.id] !== 'undefined'
       ) {
-        const parent = {
-          ...state[action.parent.id],
-          children: [...state[action.parent.id].children,
-          {id: action.component.id}]
+        const id = action.parent.id;
+        const oldParent = state[id];
+        const newParent = {...oldParent,
+          children: [...oldParent.children, {id: action.component.id}]
         };
-        newState = {...newState, [action.parent.id]: parent};
+        newState = {...newState, [id]: newParent};
       }
 
+      // then add this component to the state
       return { ...newState, [action.component.id]: action.component };
     default:
       return state;
