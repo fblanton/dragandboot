@@ -1,7 +1,7 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { filterComponents } = require('./util');
-const { ColForm, handleSubmit } = require('./forms/ColForm');
+const Forms = require('./forms/ColForm');
 
 const mapStateToProps = ({ editComponent, components }) => {
   if (editComponent !== '') {
@@ -18,15 +18,17 @@ const Editor = ({ editComponent, components, dispatch }) => {
   if (editComponent) {
     const component = components[editComponent];
     const parent = components[component.parentID]
+    const type = 'ColForm';
+
+    const Form = Forms[type];
 
     return (
       <div className='editor'>
         <h1>Editing</h1>
-        <ColForm
+        <Form
           parent={ parent }
           component={ component }
           components={ components }
-          onSubmit={ payload => handleSubmit(payload, component, dispatch) }
         />
       </div>
     );

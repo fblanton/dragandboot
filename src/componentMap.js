@@ -1,7 +1,7 @@
 const React = require('react');
 const R = require('reactstrap');
 const DND = require('./drop-components');
-window.R = R;
+
 module.exports = item => {
   const components = {
     Container: DND.Container,

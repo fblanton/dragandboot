@@ -1,5 +1,7 @@
 const React = require('react');
 const componentMap = require('./componentMap');
+const Drops = require('./drop-components');
+const reactstrap = require('reactstrap');
 
 const handleDoubleClick = (e, dispatch, id) => {
   dispatch({type: 'EDIT_COMPONENT', id})
@@ -27,17 +29,18 @@ const expandChildren = (children, components, dispatch) => children.map(
 
     if (typeof components[childID] !== 'undefined') {
       const { children, type, id, parentID, ...rest } = components[childID];
-      const Component = componentMap(components[id].type);
+      const DropComponent = (Drops[type]) ? (Drops[type]) : type;
+      const StaticComponent = (reactstrap[type]) ? (reactstrap[type]) : type;
 
       return (
-        <Component
+        <DropComponent
           {...rest}
           key={ index }
           data-id={ id }
           onDoubleClick={ (e) => handleDoubleClick(e, dispatch, id) }
         >
           { expandChildren(children, components, dispatch) }
-        </Component>
+        </DropComponent>
       );
     } else {
       console.log('Having issues, child: ', id, 'c[child]: ', components[id], 'typeof child: ', typeof child);

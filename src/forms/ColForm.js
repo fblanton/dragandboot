@@ -9,8 +9,8 @@ const mapStateToProps = ({ editComponent, components }) => {
   return ({initialValues: {...flatten(rest)}})
 };
 
-const ColForm = ({ handleSubmit }) =>
-  <form className='col-form' onSubmit={ handleSubmit }>
+const ColForm = ({ handleSubmit, component, dispatch }) =>
+  <form className='col-form' onSubmit={ handleSubmit(formValues => colSubmit(formValues, component, dispatch)) }>
     <div>
       <label htmlFor='xs'>xs</label>
       <Field name='xs-size' component='input' type='text'/>
@@ -63,7 +63,7 @@ const flatten = obj => {
   return flattest;
 }
 
-const internalSubmit = (payload, component, dispatch) => {
+const colSubmit = (payload, component, dispatch) => {
   let xs = {
     size: payload['xs-size'],
     push: payload['xs-push'],
@@ -96,6 +96,5 @@ const internalSubmit = (payload, component, dispatch) => {
 };
 
 module.exports = {
-  handleSubmit: internalSubmit,
   ColForm: connect(mapStateToProps)(reduxForm({form: 'colForm'})(ColForm))
 };
