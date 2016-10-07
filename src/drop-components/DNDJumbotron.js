@@ -12,7 +12,7 @@ const dropSpec = {
   }
 };
 
-const Drop = createDroppable(['h1', 'p'], dropSpec);
+const Drop = createDroppable(['h1', 'p', 'Container'], dropSpec);
 
 module.exports = ({children, ['data-id']: id, ...rest}) =>
   <Jumbotron {...rest}>

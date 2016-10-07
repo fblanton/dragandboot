@@ -11,9 +11,9 @@ const dropSpec = {
   }
 };
 
-const Drop = createDroppable(['Container', 'JumbotronFluid'], dropSpec);
+const Drop = createDroppable(['Container', 'Jumbotron'], dropSpec);
 
 module.exports = ({children, ...rest}) =>
   <Drop className='page' {...rest}>
-    { children.length ? children : <div className='empty'>DROP CONTAINERS HERE</div> }
+    { children.length ? children : <div className='empty'>DROP CONTAINERS or JUMBOTRONS HERE</div> }
   </Drop>;

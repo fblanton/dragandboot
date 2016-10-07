@@ -1,5 +1,5 @@
 const React = require('react');
-const { Field, reduxForm, formValueSelector } = require('redux-form');
+const { Field, reduxForm } = require('redux-form');
 const { connect } = require('react-redux');
 const _ = require('underscore');
 
@@ -115,6 +115,4 @@ const colSubmit = (payload, component, dispatch) => {
   dispatch({type: "EDIT_COMPONENT", id: ""});
 };
 
-module.exports = {
-  ColForm: connect(mapStateToProps)(reduxForm({form: 'colForm'})(ColFormImplemented))
-};
+module.exports = connect(mapStateToProps)(reduxForm({form: 'colForm'})(ColFormImplemented))

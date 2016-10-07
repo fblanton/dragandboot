@@ -1,7 +1,7 @@
 const React = require('react');
 const { createDraggable, createDroppable } = require('./dnd-higher-order-components');
 const { Navbar, NavbarBrand, Nav, NavItem } = require('reactstrap');
-const { Container, Row, Col, H1, H3, P, Jumbotron, JumbotronFluid } = require('./toolbar-items')
+const { Container, Row, Col, H1, H3, P, Jumbotron } = require('./toolbar-items')
 
 const Toolbar = () =>
   <Navbar light color='faded' fixed='bottom'>
@@ -18,7 +18,7 @@ const Toolbar = () =>
         </Row>
       </NavItem>
       <NavItem>
-        <Col xs={{size: 4, offset: 4}}>
+        <Col>
           Col
         </Col>
       </NavItem>
@@ -41,11 +41,6 @@ const Toolbar = () =>
         <Jumbotron>
           Jumbotron
         </Jumbotron>
-      </NavItem>
-      <NavItem>
-        <JumbotronFluid>
-          Jumbotron Fluid
-        </JumbotronFluid>
       </NavItem>
     </Nav>
   </Navbar>;

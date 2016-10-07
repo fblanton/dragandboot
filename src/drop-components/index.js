@@ -4,5 +4,4 @@ module.exports = {
   Page: require('./DNDPage'),
   Col: require('./DNDCol'),
   Jumbotron: require('./DNDJumbotron'),
-  JumbotronFluid: require('./DNDJumbotron-Fluid')
 }
