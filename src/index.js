@@ -15,8 +15,9 @@ const render = TheApp => ReactDOM.render(
   , document.getElementById('app')
 );
 
-store.dispatch({type: 'ADD_COMPONENT', component: {id: 0, type: 'Page', children: []}});
-store.dispatch({type: 'SET_ACTIVE', id: 0});
+const tempID = uuid();
+store.dispatch({type: 'ADD_COMPONENT', component: {id: tempID, type: 'Page', children: []}});
+store.dispatch({type: 'SET_ACTIVE', id: tempID});
 
 render(App);
 

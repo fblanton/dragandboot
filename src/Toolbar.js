@@ -18,7 +18,7 @@ const Toolbar = () =>
         </Row>
       </NavItem>
       <NavItem>
-        <Col xs='4'>
+        <Col xs={{size: 4, offset: 4}}>
           Col
         </Col>
       </NavItem>
