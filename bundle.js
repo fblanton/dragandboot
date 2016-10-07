@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2339240433eb799a8941"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "164ad4504efd05291e8f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -43846,6 +43846,8 @@
 	
 	var React = __webpack_require__(80);
 	var componentMap = __webpack_require__(501);
+	var Drops = __webpack_require__(575);
+	var reactstrap = __webpack_require__(502);
 	
 	var handleDoubleClick = function handleDoubleClick(e, dispatch, id) {
 	  dispatch({ type: 'EDIT_COMPONENT', id: id });
@@ -43885,11 +43887,12 @@
 	
 	        var rest = _objectWithoutProperties(_components$childID, ['children', 'type', 'id', 'parentID']);
 	
-	        var Component = componentMap(components[id].type);
+	        var DropComponent = Drops[type] ? Drops[type] : type;
+	        var StaticComponent = reactstrap[type] ? reactstrap[type] : type;
 	
 	        return {
 	          v: React.createElement(
-	            Component,
+	            DropComponent,
 	            _extends({}, rest, {
 	              key: index,
 	              'data-id': id,
@@ -43924,7 +43927,7 @@
 	var React = __webpack_require__(80);
 	var R = __webpack_require__(502);
 	var DND = __webpack_require__(575);
-	window.R = R;
+	
 	module.exports = function (item) {
 	  var components = {
 	    Container: DND.Container,
@@ -57516,8 +57519,6 @@
 
 	'use strict';
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
 	var React = __webpack_require__(80);
 	
 	var _require = __webpack_require__(437);
@@ -57528,11 +57529,7 @@
 	
 	var filterComponents = _require2.filterComponents;
 	
-	var _require3 = __webpack_require__(642);
-	
-	var ColForm = _require3.ColForm;
-	var handleSubmit = _require3.handleSubmit;
-	
+	var Forms = __webpack_require__(642);
 	
 	var mapStateToProps = function mapStateToProps(_ref) {
 	  var editComponent = _ref.editComponent;
@@ -57554,32 +57551,26 @@
 	  var dispatch = _ref2.dispatch;
 	
 	  if (editComponent) {
-	    var _ret = function () {
-	      var component = components[editComponent];
-	      var parent = components[component.parentID];
+	    var component = components[editComponent];
+	    var parent = components[component.parentID];
+	    var type = 'ColForm';
 	
-	      return {
-	        v: React.createElement(
-	          'div',
-	          { className: 'editor' },
-	          React.createElement(
-	            'h1',
-	            null,
-	            'Editing'
-	          ),
-	          React.createElement(ColForm, {
-	            parent: parent,
-	            component: component,
-	            components: components,
-	            onSubmit: function onSubmit(payload) {
-	              return handleSubmit(payload, component, dispatch);
-	            }
-	          })
-	        )
-	      };
-	    }();
+	    var Form = Forms[type];
 	
-	    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+	    return React.createElement(
+	      'div',
+	      { className: 'editor' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Editing'
+	      ),
+	      React.createElement(Form, {
+	        parent: parent,
+	        component: component,
+	        components: components
+	      })
+	    );
 	  } else {
 	    return React.createElement('div', null);
 	  }
@@ -57629,9 +57620,13 @@
 	
 	var ColForm = function ColForm(_ref2) {
 	  var handleSubmit = _ref2.handleSubmit;
+	  var component = _ref2.component;
+	  var dispatch = _ref2.dispatch;
 	  return React.createElement(
 	    'form',
-	    { className: 'col-form', onSubmit: handleSubmit },
+	    { className: 'col-form', onSubmit: handleSubmit(function (formValues) {
+	        return colSubmit(formValues, component, dispatch);
+	      }) },
 	    React.createElement(
 	      'div',
 	      null,
@@ -57715,7 +57710,7 @@
 	  return flattest;
 	};
 	
-	var internalSubmit = function internalSubmit(payload, component, dispatch) {
+	var colSubmit = function colSubmit(payload, component, dispatch) {
 	  var xs = {
 	    size: payload['xs-size'],
 	    push: payload['xs-push'],
@@ -57748,7 +57743,6 @@
 	};
 	
 	module.exports = {
-	  handleSubmit: internalSubmit,
 	  ColForm: connect(mapStateToProps)(reduxForm({ form: 'colForm' })(ColForm))
 	};
 
