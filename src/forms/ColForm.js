@@ -49,6 +49,26 @@ const ColForm = ({ handleSubmit, component, dispatch }) =>
     <button type='submit'>Submit</button>
   </form>;
 
+const ColFormImplemented = ({ handleSubmit, component, dispatch }) =>
+  <form className='col-form' onSubmit={ handleSubmit(formValues => colSubmit(formValues, component, dispatch)) }>
+    <div>SIZE PUSH PULL OFFSET</div>
+    <div>
+      <label htmlFor='xs'>xs</label>
+      <Field name='xs-size' component='input' type='text'/>
+      <Field name='xs-push' component='input' type='text'/>
+      <Field name='xs-pull' component='input' type='text'/>
+      <Field name='xs-offset' component='input' type='text'/>
+    </div>
+    <div>
+      <label htmlFor='md'>md</label>
+      <Field name='md-size' component='input' type='text'/>
+      <Field name='md-push' component='input' type='text'/>
+      <Field name='md-pull' component='input' type='text'/>
+      <Field name='md-offset' component='input' type='text'/>
+    </div>
+    <button type='submit'>Submit</button>
+  </form>;
+
 const flatten = obj => {
   const flattest = _.reduce(obj,
     (memo, val, key) => {
@@ -96,5 +116,5 @@ const colSubmit = (payload, component, dispatch) => {
 };
 
 module.exports = {
-  ColForm: connect(mapStateToProps)(reduxForm({form: 'colForm'})(ColForm))
+  ColForm: connect(mapStateToProps)(reduxForm({form: 'colForm'})(ColFormImplemented))
 };
