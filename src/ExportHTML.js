@@ -30,15 +30,18 @@ const ExportHTML =
 ({ store, activePage, components, dispatch, exportHTML }) => {
   if (exportHTML) {
     const children = components[activePage].children;
-    const theHTML =
-    beautify_html(topOfPage +
-      renderToStaticMarkup(
-        <Provider store={ store }>
-        <div>
-        { expandChildren(children, components, dispatch, exportHTML) }
-        </div>
-        </Provider>
-      ) + bottomOfPage,
+    const staticMarkup = renderToStaticMarkup(
+      <Provider store={ store }>
+      <div>
+      { expandChildren(children, components, dispatch, exportHTML) }
+      </div>
+      </Provider>
+    )
+
+    const theHTML = beautify_html(
+      topOfPage
+      + staticMarkup.substring(5, staticMarkup.length-6)
+      + bottomOfPage,
       {['indent_size']: 2}
     );
     return (

@@ -4,7 +4,7 @@ const { createDraggable, createDroppable } = require('./dnd-higher-order-compone
 const { Navbar, NavbarBrand, Nav, NavItem, Button } = require('reactstrap');
 const { Container, Row, Col, H1, H3, P, Jumbotron } = require('./toolbar-items')
 
-const Toolbar = ({ dispatch }) =>
+const Toolbar = ({ dispatch, exportHTML }) =>
   <Navbar light color='faded' fixed='bottom'>
     <NavbarBrand>Dragn Boot</NavbarBrand>
     <Nav navbar>
@@ -45,8 +45,10 @@ const Toolbar = ({ dispatch }) =>
       </NavItem>
     </Nav>
     <Nav className="pull-xs-right" navbar>
-      <Button color="primary" onClick={ () => dispatch({type: 'TOGGLE_EXPORT'})}>View HTML</Button>
+      <Button color="primary" onClick={ () => dispatch({type: 'TOGGLE_EXPORT'})}>
+        { exportHTML ? 'Hide HTML' : 'View HTML' }
+      </Button>
     </Nav>
   </Navbar>;
 
-module.exports = connect()(Toolbar);
+module.exports = connect(({ exportHTML }) => ({ exportHTML }))(Toolbar);
