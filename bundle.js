@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "5814f46b85a5940e6938"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "367b6702ada73211617c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -57600,6 +57600,11 @@
 	
 	var _ = __webpack_require__(643);
 	
+	var _require3 = __webpack_require__(502);
+	
+	var Button = _require3.Button;
+	
+	
 	var mapStateToProps = function mapStateToProps(_ref) {
 	  var editComponent = _ref.editComponent;
 	  var components = _ref.components;
@@ -57737,8 +57742,8 @@
 	      React.createElement(Field, { name: 'md-offset', component: 'input', type: 'text' })
 	    ),
 	    React.createElement(
-	      'button',
-	      { type: 'submit' },
+	      Button,
+	      { color: 'primary', type: 'submit' },
 	      'Submit'
 	    )
 	  );
@@ -59361,6 +59366,11 @@
 	
 	var _ = __webpack_require__(643);
 	
+	var _require3 = __webpack_require__(502);
+	
+	var Button = _require3.Button;
+	
+	
 	var liveUpdate = function liveUpdate(value, id, dispatch) {
 	  dispatch({ type: 'UPDATE_COMPONENT', id: id, update: { children: [value] } });
 	  return value;
@@ -59394,15 +59404,15 @@
 	      })
 	    ),
 	    React.createElement(
-	      'button',
-	      { type: 'submit', onClick: handleSubmit(function (newHeader) {
+	      Button,
+	      { color: 'primary', type: 'submit', onClick: handleSubmit(function (newHeader) {
 	          return formSubmit(newHeader, id, dispatch);
 	        }) },
 	      'Apply'
 	    ),
 	    React.createElement(
-	      'button',
-	      { type: 'button', onClick: reset },
+	      Button,
+	      { color: 'warning', type: 'button', onClick: reset },
 	      'Reset'
 	    )
 	  );
