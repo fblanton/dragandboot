@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "367b6702ada73211617c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6a7d564d340baea689c1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -57343,6 +57343,7 @@
 	
 	var Toolbar = function Toolbar(_ref) {
 	  var dispatch = _ref.dispatch;
+	  var exportHTML = _ref.exportHTML;
 	  return React.createElement(
 	    Navbar,
 	    { light: true, color: 'faded', fixed: 'bottom' },
@@ -57426,13 +57427,16 @@
 	        { color: 'primary', onClick: function onClick() {
 	            return dispatch({ type: 'TOGGLE_EXPORT' });
 	          } },
-	        'View HTML'
+	        exportHTML ? 'Hide HTML' : 'View HTML'
 	      )
 	    )
 	  );
 	};
 	
-	module.exports = connect()(Toolbar);
+	module.exports = connect(function (_ref2) {
+	  var exportHTML = _ref2.exportHTML;
+	  return { exportHTML: exportHTML };
+	})(Toolbar);
 
 /***/ },
 /* 639 */
@@ -57478,7 +57482,7 @@
 	  Row: createTool('Row'),
 	  H1: createTool('h1', ['Lorem Ipsum']),
 	  H3: createTool('h3', ['Dolor Sit']),
-	  P: createTool('p', ['Consectetur <i>adipiscing</i> elit. Nulla vitae dolor at sem dignissim maximus. In semper enim nec quam maximus, nec venenatis justo dignissim.']),
+	  P: createTool('p', ['Consectetur adipiscing elit. Nulla vitae dolor at sem dignissim maximus. In semper enim nec quam maximus, nec venenatis justo dignissim. Adipiscing elit nulla vitae.']),
 	  Jumbotron: createTool('Jumbotron'),
 	  JumbotronFluid: createTool('JumbotronFluid')
 	};
@@ -59534,7 +59538,7 @@
 	
 	  if (exportHTML) {
 	    var children = components[activePage].children;
-	    var theHTML = beautify_html(topOfPage + renderToStaticMarkup(React.createElement(
+	    var staticMarkup = renderToStaticMarkup(React.createElement(
 	      Provider,
 	      { store: store },
 	      React.createElement(
@@ -59542,7 +59546,9 @@
 	        null,
 	        expandChildren(children, components, dispatch, exportHTML)
 	      )
-	    )) + bottomOfPage, _defineProperty({}, 'indent_size', 2));
+	    ));
+	
+	    var theHTML = beautify_html(topOfPage + staticMarkup.substring(5, staticMarkup.length - 6) + bottomOfPage, _defineProperty({}, 'indent_size', 2));
 	    return React.createElement(
 	      'div',
 	      { className: 'editor', style: { width: '90%' } },
