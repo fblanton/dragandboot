@@ -2,6 +2,7 @@ const React = require('react');
 const { Field, reduxForm } = require('redux-form');
 const { connect } = require('react-redux');
 const _ = require('underscore');
+const { Button } = require('reactstrap');
 
 const mapStateToProps = ({ editComponent, components }) => {
   const { children, id, parentID, type, ...rest } = components[editComponent];
@@ -66,7 +67,7 @@ const ColFormImplemented = ({ handleSubmit, component, dispatch }) =>
       <Field name='md-pull' component='input' type='text'/>
       <Field name='md-offset' component='input' type='text'/>
     </div>
-    <button type='submit'>Submit</button>
+    <Button color="primary" type='submit'>Submit</Button>
   </form>;
 
 const flatten = obj => {

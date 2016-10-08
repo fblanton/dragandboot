@@ -2,6 +2,7 @@ const React = require('react');
 const { Field, reduxForm } = require('redux-form');
 const { connect } = require('react-redux');
 const _ = require('underscore');
+const { Button } = require('reactstrap');
 
 const liveUpdate = (value, id, dispatch) => {
   dispatch({type: 'UPDATE_COMPONENT', id, update: {children: [value]}});
@@ -20,12 +21,8 @@ const HeaderForm = ({ reset, onChangeAction, handleSubmit, dispatch, component: 
       id={ id }
     />
   </div>
-  <button type='submit' onClick= { handleSubmit((newHeader) => formSubmit(newHeader, id, dispatch)) }>
-    Apply
-  </button>
-  <button type='button' onClick= { reset }>
-    Reset
-  </button>
+  <Button color="primary" type='submit' onClick= { handleSubmit((newHeader) => formSubmit(newHeader, id, dispatch)) }>Apply</Button>
+  <Button color="warning" type='button' onClick= { reset }>Reset</Button>
 </form>
 
 const formSubmit = ({ header }, id, dispatch) => {
