@@ -21,7 +21,7 @@ const filterComponents = (components, filter) => {
   );
 }
 
-const expandChildren = (children, components, dispatch) => children.map(
+const expandChildren = (children, components, dispatch, exportHTML) => children.map(
   (child, index) => {
     if (typeof child === 'string') return child;
 
@@ -32,15 +32,17 @@ const expandChildren = (children, components, dispatch) => children.map(
       const DropComponent = (Drops[type]) ? (Drops[type]) : type;
       const StaticComponent = (reactstrap[type]) ? (reactstrap[type]) : type;
 
+      const Component = exportHTML ? StaticComponent : DropComponent;
+      const props = exportHTML ? rest : ({ ...rest, ['data-id']: id });
+
       return (
-        <DropComponent
-          {...rest}
+        <Component
+          {...props}
           key={ index }
-          data-id={ id }
           onDoubleClick={ (e) => handleDoubleClick(e, dispatch, id) }
         >
-          { expandChildren(children, components, dispatch) }
-        </DropComponent>
+          { expandChildren(children, components, dispatch, exportHTML) }
+        </Component>
       );
     } else {
       console.log('Having issues, child: ', id, 'c[child]: ', components[id], 'typeof child: ', typeof child);

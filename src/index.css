@@ -34,6 +34,8 @@
   top: 50%;
   left: 50%;
   min-width: 400px;
+  max-height: 80vh;
+  overflow: scroll;
   transform: translateX(-50%) translateY(-50%);
   border-radius: 3px;
   border: 1px solid rgba(140,150,143,.9);

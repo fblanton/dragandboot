@@ -21,6 +21,15 @@ const editComponent = (state = '', { type, id }) => {
   }
 }
 
+const exportHTML = (state = false, { type }) => {
+  switch (type) {
+    case 'TOGGLE_EXPORT':
+      return !state;
+    default:
+      return state;
+  }
+}
+
 const visibleTools = (state = 'all', action) => {
   switch (action.type) {
     case 'TOOL_VISIBILITY':
@@ -62,4 +71,4 @@ const components = (state = {}, action) => {
   }
 };
 
-module.exports = combineReducers({ activePage, components, visibleTools, editComponent, form });
+module.exports = combineReducers({ activePage, components, visibleTools, editComponent, form, exportHTML });

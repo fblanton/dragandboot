@@ -39,6 +39,7 @@
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
+    "js-beautify": "^1.6.4",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-transition-group": "^15.3.2",

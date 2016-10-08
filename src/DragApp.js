@@ -6,14 +6,15 @@ const { Page } = require('./drop-components');
 const mapStateToProps = state => ({
   activePage: state.activePage,
   components: state.components,
+  exportHTML: state.exportHTML
 });
 
-const DragApp = ({ activePage, components, dispatch }) => {
+const DragApp = ({ activePage, components, dispatch, exportHTML }) => {
   const children = components[activePage].children;
 
   return (
     <Page data-id={ activePage }>
-      { expandChildren(children, components, dispatch) }
+      { expandChildren(children, components, dispatch, exportHTML) }
     </Page>
   );
 };
