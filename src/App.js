@@ -19,7 +19,7 @@ const App = React.createClass({
             <DragApp />
           </div>
           <Editor />
-          { (activePage !== '') ? <ExportHTML store={ this.props.store } /> : null }
+          <ExportHTML store={ this.props.store } />
         </div>
       </Provider>
     );
