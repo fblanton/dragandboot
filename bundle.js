@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ed0e1289077a3421a854"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a6d0249b6da77f327050"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -17912,7 +17912,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/*.hoverable {\n  height: 100px;\n  width: 100px;\n}*/\n\n.page {\n  height: 100vh;\n  overflow: scroll;\n}\n\n.empty {\n  line-height: 5em;\n  text-align: center;\n  border-style: dashed;\n  border-radius: .3em;\n  border-color: gray;\n}\n\n.droppable {\n  background-color: rgba(230,230,200,.5);\n  padding: 1em;\n}\n\n.hovered {\n  background-color: rgba(200,230,200,.5);\n}\n\n.page .empty {\n  height: 100%;\n}\n\n.editor{\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  min-width: 400px;\n  max-height: 80vh;\n  overflow: scroll;\n  transform: translateX(-50%) translateY(-50%);\n  border-radius: 4px;\n  border: 1px solid rgba(140,150,143,.9);\n  border-top: 1em solid rgba(140,150,143,.9);\n  padding-top: .5em;\n  padding-bottom: 1em;\n  padding-left: 1.5em;\n  padding-right: 1.5em;\n  box-shadow: 0px 0px 10px 3px rgba(0,0,0,.2);\n  background-color: white;\n}\n\n.start-screen {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  width: 75vw;\n  max-height: 75vh;\n  padding: 3em;\n  overflow: scroll;\n  transform: translateX(-50%) translateY(-50%);\n  border-radius: 4px;\n  text-align: center;\n  box-shadow: 0px 0px 10px 3px rgba(0,0,0,.2);\n  background-color: rgb(250,250,255);\n}\n\n.col-form input {\n  width: 2em;\n  margin-right: 1em;\n}\n.col-form label {\n  width: 2em;\n}\n\n.main-app {\n  margin-bottom: 54px;\n}\n", ""]);
+	exports.push([module.id, "/*.hoverable {\n  height: 100px;\n  width: 100px;\n}*/\n\n.page {\n  height: 100vh;\n  overflow: scroll;\n}\n\n.empty {\n  line-height: 5em;\n  text-align: center;\n  border-style: dashed;\n  border-radius: .3em;\n  border-color: gray;\n}\n\n.droppable {\n  background-color: rgba(230,230,200,.5);\n  padding: 1em;\n}\n\n.hovered {\n  background-color: rgba(200,230,200,.5);\n}\n\n.page .empty {\n  height: 100%;\n}\n\n.editor{\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  min-width: 400px;\n  max-height: 80vh;\n  overflow: scroll;\n  transform: translateX(-50%) translateY(-50%);\n  border-radius: 4px;\n  border: 1px solid rgba(140,150,143,.9);\n  border-top: 1em solid rgba(140,150,143,.9);\n  padding-top: .5em;\n  padding-bottom: 1em;\n  padding-left: 1.5em;\n  padding-right: 1.5em;\n  box-shadow: 0px 0px 10px 3px rgba(0,0,0,.2);\n  background-color: white;\n}\n\n.start-screen {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  width: 75vw;\n  max-height: 75vh;\n  padding: 3em;\n  overflow: scroll;\n  transform: translateX(-50%) translateY(-50%);\n  border-radius: 4px;\n  text-align: center;\n  box-shadow: 0px 0px 10px 3px rgba(0,0,0,.2);\n  background-color: rgb(245,245,241);\n}\n\n.col-form input {\n  width: 2em;\n  margin-right: 1em;\n}\n.col-form label {\n  width: 2em;\n}\n\n.main-app {\n  margin-bottom: 54px;\n}\n", ""]);
 	
 	// exports
 
@@ -43797,7 +43797,7 @@
 	          React.createElement(DragApp, null)
 	        ),
 	        React.createElement(Editor, null),
-	        activePage !== '' ? React.createElement(ExportHTML, { store: this.props.store }) : null
+	        React.createElement(ExportHTML, { store: this.props.store })
 	      )
 	    );
 	  }
@@ -59560,6 +59560,7 @@
 	var Toolbar = function Toolbar(_ref) {
 	  var dispatch = _ref.dispatch;
 	  var exportHTML = _ref.exportHTML;
+	  var activePage = _ref.activePage;
 	  return React.createElement(
 	    Navbar,
 	    { light: true, color: 'faded', fixed: 'bottom' },
@@ -59635,7 +59636,7 @@
 	        )
 	      )
 	    ),
-	    React.createElement(
+	    activePage !== '' ? React.createElement(
 	      Nav,
 	      { className: 'pull-xs-right', navbar: true },
 	      React.createElement(
@@ -59645,13 +59646,14 @@
 	          } },
 	        exportHTML ? 'Hide HTML' : 'View HTML'
 	      )
-	    )
+	    ) : null
 	  );
 	};
 	
 	module.exports = connect(function (_ref2) {
+	  var activePage = _ref2.activePage;
 	  var exportHTML = _ref2.exportHTML;
-	  return { exportHTML: exportHTML };
+	  return { activePage: activePage, exportHTML: exportHTML };
 	})(Toolbar);
 
 /***/ },
