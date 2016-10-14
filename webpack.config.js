@@ -4,6 +4,7 @@ var path = require('path');
 module.exports = {
   devtool: 'source-map',
   entry: [
+    'whatwg-fetch',
     'webpack-dev-server/client?http://0.0.0.0:3000',
     'webpack/hot/only-dev-server',
     'react-hot-loader/patch',

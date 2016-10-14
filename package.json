@@ -52,6 +52,7 @@
     "redux-form": "^6.0.5",
     "redux-thunk": "^2.1.0",
     "underscore": "^1.8.3",
-    "uuid-v4": "^0.1.0"
+    "uuid-v4": "^0.1.0",
+    "whatwg-fetch": "^1.0.0"
   }
 }
