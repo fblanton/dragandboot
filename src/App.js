@@ -3,14 +3,12 @@ const { Provider } = require('react-redux');
 const DragApp = require('./DragApp');
 const Editor = require('./Editor');
 const Toolbar = require('./Toolbar');
-const ExportHTML = require('./ExportHTML');
+const { ViewHTML } = require('./ViewHTML');
 const HTML5Backend = require('react-dnd-html5-backend');
 const { DragDropContext } = require('react-dnd');
 
 const App = React.createClass({
   render: function () {
-    const { activePage } = this.props.store.getState();
-
     return (
       <Provider store={ this.props.store }>
         <div>
@@ -19,7 +17,7 @@ const App = React.createClass({
             <DragApp />
           </div>
           <Editor />
-          <ExportHTML store={ this.props.store } />
+          <ViewHTML store={ this.props.store } />
         </div>
       </Provider>
     );
@@ -27,7 +25,3 @@ const App = React.createClass({
 });
 
 module.exports = DragDropContext(HTML5Backend)(App);
-// const uuid = require('uuid-v4');
-// const tempID = uuid();
-// store.dispatch({type: 'ADD_COMPONENT', component: {id: tempID, type: 'Page', children: []}});
-// store.dispatch({type: 'SET_ACTIVE', id: tempID});

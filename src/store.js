@@ -1,7 +1,11 @@
-const { createStore } = require('redux');
+const { createStore, applyMiddleware, compose } = require('redux');
+const thunk = require('redux-thunk').default;
 const appReducer = require('./reducers');
+const postHTML = require('./file-creator-api');
 
-const store = createStore(appReducer, window.devToolsExtension && window.devToolsExtension());
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(appReducer, composeEnhancers(applyMiddleware(thunk.withExtraArgument(postHTML))));
 
 window.testStore = store;
 

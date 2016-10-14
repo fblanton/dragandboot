@@ -1,8 +1,9 @@
 const React = require('react');
 const { connect } = require('react-redux');
 const { createDraggable, createDroppable } = require('./dnd-higher-order-components');
-const { Navbar, NavbarBrand, Nav, NavItem, Button } = require('reactstrap');
-const { Container, Row, Col, H1, H3, P, Jumbotron } = require('./toolbar-items')
+const { Navbar, NavbarBrand, Nav, NavItem, Button, ButtonGroup } = require('reactstrap');
+const { Container, Row, Col, H1, H3, P, Jumbotron } = require('./toolbar-items');
+const ViewDownload = require('./toolbar-items/ViewDownload');
 
 const Toolbar = ({ dispatch, exportHTML, activePage }) =>
   <Navbar light color='faded' fixed='bottom'>
@@ -44,19 +45,7 @@ const Toolbar = ({ dispatch, exportHTML, activePage }) =>
         </Jumbotron>
       </NavItem>
     </Nav>
-    {
-      (activePage !== '') ?
-      <Nav className="pull-xs-right" navbar>
-        <Button color="primary" onClick={ () => dispatch({type: 'TOGGLE_EXPORT'})}>
-          { exportHTML ? 'Hide HTML' : 'View HTML' }
-        </Button>
-      </Nav> :
-      null
-    }
+    <ViewDownload />
   </Navbar>;
 
-module.exports =
-  connect(
-    ({ activePage, exportHTML }) =>
-    ({ activePage, exportHTML })
-  )(Toolbar);
+module.exports = Toolbar;
