@@ -3,7 +3,7 @@ const { Provider } = require('react-redux');
 const DragApp = require('./DragApp');
 const Editor = require('./Editor');
 const Toolbar = require('./Toolbar');
-const { ViewHTML } = require('./ViewHTML');
+const ViewHTML = require('./ViewHTML');
 const HTML5Backend = require('react-dnd-html5-backend');
 const { DragDropContext } = require('react-dnd');
 
@@ -17,7 +17,7 @@ const App = React.createClass({
             <DragApp />
           </div>
           <Editor />
-          <ViewHTML store={ this.props.store } />
+          <ViewHTML />
         </div>
       </Provider>
     );

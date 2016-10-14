@@ -1,5 +1,5 @@
 const React = require('react');
-const { Provider, connect } = require('react-redux');
+const { connect } = require('react-redux');
 const { renderToStaticMarkup } = require('react-dom/server');
 const { expandChildren } = require('./util');
 const { html: beautifyHTML } = require('js-beautify');
@@ -21,27 +21,18 @@ const bottomOfPage = `
 </body>
 </html>`
 
-
-const mapStateToProps = ({ activePage, components, exportHTML }) =>
-  ({ activePage, components, exportHTML });
-
-const createHTML = ({ store, activePage, components, dispatch }) => {
+const createHTML = ({ activePage, components, dispatch }) => {
   const children = components[activePage].children;
   const staticMarkup = renderToStaticMarkup(
-    <Provider store={ store }>
     <div>
-    { expandChildren(children, components, dispatch, true) }
+      { expandChildren(children, components, dispatch, true) }
     </div>
-    </Provider>
   )
-
-  const theHTML = beautifyHTML(
-    topOfPage
-    + staticMarkup.substring(5, staticMarkup.length-6)
-    + bottomOfPage,
-    {['indent_size']: 2}
-  );
-
+  const theHTML = beautifyHTML([
+    topOfPage,
+    staticMarkup.substring(5, staticMarkup.length-6),
+    bottomOfPage
+  ].join(''), { 'indent_size': 2 });
   dispatch((dispatch, getState, postHTML) => {
     postHTML('index', theHTML)
       .then(r => r.json()).then(r => console.log(r))
@@ -50,6 +41,9 @@ const createHTML = ({ store, activePage, components, dispatch }) => {
   return theHTML;
 }
 
+const mapStateToProps = ({ activePage, components, exportHTML }) =>
+  ({ activePage, components, exportHTML });
+
 const ViewHTML = props =>
   (props.exportHTML)
     ? <div className='editor' style={{ width: '90%' }}>
@@ -57,7 +51,4 @@ const ViewHTML = props =>
       </div>
     : <div></div>
 
-module.exports = {
-  ViewHTML: connect(mapStateToProps)(ViewHTML),
-  createHTML
-};
+module.exports = connect(mapStateToProps)(ViewHTML);
