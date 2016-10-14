@@ -35,8 +35,13 @@ const createHTML = ({ activePage, components, dispatch }) => {
   ].join(''), { 'indent_size': 2 });
   dispatch((dispatch, getState, postHTML) => {
     postHTML('index', theHTML)
-      .then(r => r.json()).then(r => console.log(r))
-      .catch(err => console.log('error: ', err))
+      .then(({ success, url, timer }) => {
+        if (success) {
+          clearTimeout(window.downloadTimer);
+          window.downloadTimer = setTimeout(()=>dispatch({ type: 'SET_DOWNLOAD', url: '' }), timer);
+          dispatch({ type: 'SET_DOWNLOAD', url });
+        }
+      })
   })
   return theHTML;
 }

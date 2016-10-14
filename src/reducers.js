@@ -30,6 +30,15 @@ const exportHTML = (state = false, { type }) => {
   }
 }
 
+const downloadLink = (state = '', action) => {
+  switch (action.type) {
+    case 'SET_DOWNLOAD':
+      return action.url;
+    default:
+      return state;
+  }
+}
+
 const visibleTools = (state = 'all', action) => {
   switch (action.type) {
     case 'TOOL_VISIBILITY':
@@ -71,4 +80,4 @@ const components = (state = {}, action) => {
   }
 };
 
-module.exports = combineReducers({ activePage, components, visibleTools, editComponent, form, exportHTML });
+module.exports = combineReducers({ activePage, components, visibleTools, editComponent, form, exportHTML, downloadLink });
