@@ -50,34 +50,44 @@ const visibleTools = (state = 'all', action) => {
 
 const components = (state = {}, action) => {
   switch (action.type) {
-    case 'ADD_COMPONENT':
-      const { parent, component } = action;
-
-      let newState = {...state};
-
-      // add this component's id to it's parent's children array
-      if (
-        typeof parent !== 'undefined' &&
-        typeof state[parent.id] !== 'undefined'
-      ) {
-        const id = parent.id;
-        const oldParent = state[id];
-        const newParent = {...oldParent,
-          children: [...oldParent.children, {id: component.id}]
-        };
-        newState = {...newState, [id]: newParent};
-        component.parentID = parent.id;
-      }
-      // then add this component to the state
-      return { ...newState, [component.id]: component };
+    case 'ADD_COMPONENTS':
+      const { components } = action
+      let newState = {...state}
+      components.forEach(component =>
+        newState = {...add(newState, component)}
+      )
+      return newState;
     case 'UPDATE_COMPONENT':
       const { id, update } = action;
-      const updatedComponent = {...state[id], ...update};
-
-      return { ...state, [id]: updatedComponent }
+      return { ...state, [id]: {...state[id], ...update} };
     default:
       return state;
   }
 };
 
-module.exports = combineReducers({ activePage, components, visibleTools, editComponent, form, exportHTML, downloadLink });
+module.exports = combineReducers({
+  activePage,
+  components,
+  visibleTools,
+  editComponent,
+  form,
+  exportHTML,
+  downloadLink
+});
+
+const add = ( state, action ) => {
+  let newState = {...state};
+  // add this component's id to it's parent's children array
+  const { parent, component } = action;
+  if (parent && typeof newState[parent.id] !== 'undefined') {
+    const id = parent.id;
+    const newParent = {...newState[id],
+      children: [...newState[id].children, {id: component.id}]
+    };
+    component.parentID = id;
+    newState = {...newState, [id]: newParent};
+  }
+  // then add this component to the state
+  newState = { ...newState, [component.id]: component };
+  return newState;
+}

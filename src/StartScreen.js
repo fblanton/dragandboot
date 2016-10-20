@@ -2,7 +2,8 @@ const React = require('react');
 const RS = require('reactstrap');
 const uuid = require('uuid-v4');
 const { connect } = require('react-redux');
-
+const { addComponents } = require('./action-creators');
+const templates = require('./templates/');
 
 const Scratch = ({ dispatch }) =>
   <RS.FormGroup>
@@ -11,7 +12,10 @@ const Scratch = ({ dispatch }) =>
       onClick={ (e) => {
         e.preventDefault()
         const tempID = uuid();
-        dispatch({type: 'ADD_COMPONENT', component: {id: tempID, type: 'Page', children: []}});
+        dispatch(addComponents({
+          component: {id: tempID, type: 'Page', children: []}})
+        );
+        dispatch(addComponents(templates.homepage(tempID)))
         dispatch({type: 'SET_ACTIVE', id: tempID});
       }}
     >

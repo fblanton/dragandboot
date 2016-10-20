@@ -1,14 +1,14 @@
 const React = require('react');
 const { Container } = require('reactstrap');
 const { createDraggable, createDroppable } = require('../dnd-higher-order-components');
+const { addComponents } = require('../action-creators')
 
 const dropSpec = {
   drop: (props, monitor, component) => {
     if (monitor.didDrop()) return;
 
     const dropped = monitor.getItem();
-    props.dispatch({...dropped, parent: {id: props['data-id']}});
-    //console.log('PROPS[data-id]: ', props['data-id'],'DROPPED: ', dropped, 'COMP: ', component);
+    props.dispatch(addComponents(dropped, props['data-id']));
   }
 };
 

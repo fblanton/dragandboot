@@ -4,7 +4,7 @@ const { createDraggable } = require('../dnd-higher-order-components');
 const type = 'Container';
 
 const createSpec = (type, contents) => ({
-  beginDrag: ({children, ...rest}) => ({type: 'ADD_COMPONENT', component: {id: uuid(), type: type, children: [...contents], ...rest}})
+  beginDrag: ({children, ...rest}) => ({component: {id: uuid(), type: type, children: [...contents], ...rest}})
 });
 
 const createTool = (type, contents = []) => createDraggable(type, createSpec(type, contents));
