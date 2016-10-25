@@ -7,20 +7,33 @@ const templates = require('./templates/');
 
 const Scratch = ({ dispatch }) =>
   <RS.FormGroup>
-    <RS.Button
+  <RS.ButtonGroup vertical><RS.Button
+    color="info"
+    onClick={ (e) => {
+      e.preventDefault()
+      const tempID = uuid();
+      dispatch(addComponents({
+        component: { id: tempID, type: 'Page', children: [] }
+      }));
+      dispatch(addComponents(templates.homepage(tempID)))
+      dispatch({ type: 'SET_ACTIVE', id: tempID });
+    }}
+  >
+    Start from Template
+  </RS.Button>
+  <RS.Button
       color="info"
       onClick={ (e) => {
         e.preventDefault()
         const tempID = uuid();
         dispatch(addComponents({
-          component: {id: tempID, type: 'Page', children: []}})
-        );
-        dispatch(addComponents(templates.homepage(tempID)))
-        dispatch({type: 'SET_ACTIVE', id: tempID});
+          component: { id: tempID, type: 'Page', children: [] }
+        }));
+        dispatch({ type: 'SET_ACTIVE', id: tempID });
       }}
     >
       Start from Scratch
-    </RS.Button>
+    </RS.Button></RS.ButtonGroup>
   </RS.FormGroup>;
 
 const ConnectedScratch = connect()(Scratch);
