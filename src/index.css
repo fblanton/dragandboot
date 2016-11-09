@@ -1,7 +1,6 @@
-/*.hoverable {
-  height: 100px;
-  width: 100px;
-}*/
+.hoverable {
+  height: 100%;
+}
 
 .page {
   height: 100vh;

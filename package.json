@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --module-bind \"css=style\\!css\"",
-    "watch": "webpack --watch",
+    "watch": "webpack --watch --module-bind \"css=style\\!css\"",
     "serve": "webpack-dev-server --module-bind \"css=style\\!css\"",
     "deploy": "gh-pages -d dist/public"
   },

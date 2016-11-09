@@ -4,24 +4,60 @@ const __ = Object.assign
 const uuid = require('uuid-v4');
 
 const homepage = [
+  {style: `
+    .fold {
+      height: 100vh;
+      text-align: center;
+      background-color: orange;
+      position: relative;
+      font-size: 2rem;
+    }
+    .fold h1 {
+      color: white;
+      font-size: 4rem;
+    }
+    .v-center {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .square-md-3 {
+      height: 0;
+      padding-bottom: 33.3333%;
+    }
+  `},
   { Jumbotron: [
     { Container: [
       { Row: [
         { Col: [
-          { h1: 'Hello World!' },
-          { p: 'This is cool' }
+          { h1: 'Lorem Ipsum' },
+          { p: 'Dolor sit amet, consectetur adipiscing elit.' }
         ] }
       ] }
-    ] }
-  ], attrs: { fluid: true } },
+    ], attrs: { className: 'v-center' } }
+  ], attrs: { fluid: true, className: 'fold' } },
   { Container: [
     { Row: [
       { Col: [
-        { h1: 'Header' }, { p: 'More Words' }
-      ], attrs: { xs: 4 } },
+        { div: [
+          { h1: 'Header' }, { p: 'More Words Here' }
+        ] }
+      ], attrs: { md: 4, className: 'square-md-3' } },
       { Col: [
         { h1: 'Another' }, { p: 'Another P' }
-      ], attrs: { xs: 8 } },
+      ], attrs: { md: 4 } },
+      { Col: [
+        { h1: 'Another' }, { p: 'Another P' }
+      ], attrs: { md: 4 } },
+      { Col: [
+        { h1: 'Header' }, { p: 'More Words Here' }
+      ], attrs: { md: 4 } },
+      { Col: [
+        { h1: 'Another' }, { p: 'Another P' }
+      ], attrs: { md: 4 } },
+      { Col: [
+        { h1: 'Another' }, { p: 'Another P' }
+      ], attrs: { md: 4 } },
     ] }
   ] }
 ]
