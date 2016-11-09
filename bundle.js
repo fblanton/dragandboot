@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8b754348a9de6ba5234c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bc82c6d86f50bbfb4949"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -18352,7 +18352,7 @@
 	
 	
 	// module
-	exports.push([module.id, "/*.hoverable {\n  height: 100px;\n  width: 100px;\n}*/\n\n.page {\n  height: 100vh;\n  overflow: scroll;\n}\n\n.empty {\n  line-height: 5em;\n  text-align: center;\n  border-style: dashed;\n  border-radius: .3em;\n  border-color: gray;\n}\n\n.droppable {\n  background-color: rgba(230,230,200,.5);\n  padding: 1em;\n}\n\n.hovered {\n  background-color: rgba(200,230,200,.5);\n}\n\n.page .empty {\n  height: 100%;\n}\n\n.editor{\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  min-width: 400px;\n  max-height: 80vh;\n  overflow: scroll;\n  transform: translateX(-50%) translateY(-50%);\n  border-radius: 4px;\n  border: 1px solid rgba(140,150,143,.9);\n  border-top: 1em solid rgba(140,150,143,.9);\n  padding-top: .5em;\n  padding-bottom: 1em;\n  padding-left: 1.5em;\n  padding-right: 1.5em;\n  box-shadow: 0px 0px 10px 3px rgba(0,0,0,.2);\n  background-color: white;\n}\n\n.start-screen {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  width: 75vw;\n  max-height: 75vh;\n  padding: 3em;\n  overflow: scroll;\n  transform: translateX(-50%) translateY(-50%);\n  border-radius: 4px;\n  text-align: center;\n  box-shadow: 0px 0px 10px 3px rgba(0,0,0,.2);\n  background-color: rgb(245,245,241);\n}\n\n.col-form input {\n  width: 2em;\n  margin-right: 1em;\n}\n.col-form label {\n  width: 2em;\n}\n\n.main-app {\n  margin-bottom: 54px;\n}\n", ""]);
+	exports.push([module.id, ".hoverable {\n  height: 100%;\n}\n\n.page {\n  height: 100vh;\n  overflow: scroll;\n}\n\n.empty {\n  line-height: 5em;\n  text-align: center;\n  border-style: dashed;\n  border-radius: .3em;\n  border-color: gray;\n}\n\n.droppable {\n  background-color: rgba(230,230,200,.5);\n  padding: 1em;\n}\n\n.hovered {\n  background-color: rgba(200,230,200,.5);\n}\n\n.page .empty {\n  height: 100%;\n}\n\n.editor{\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  min-width: 400px;\n  max-height: 80vh;\n  overflow: scroll;\n  transform: translateX(-50%) translateY(-50%);\n  border-radius: 4px;\n  border: 1px solid rgba(140,150,143,.9);\n  border-top: 1em solid rgba(140,150,143,.9);\n  padding-top: .5em;\n  padding-bottom: 1em;\n  padding-left: 1.5em;\n  padding-right: 1.5em;\n  box-shadow: 0px 0px 10px 3px rgba(0,0,0,.2);\n  background-color: white;\n}\n\n.start-screen {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  width: 75vw;\n  max-height: 75vh;\n  padding: 3em;\n  overflow: scroll;\n  transform: translateX(-50%) translateY(-50%);\n  border-radius: 4px;\n  text-align: center;\n  box-shadow: 0px 0px 10px 3px rgba(0,0,0,.2);\n  background-color: rgb(245,245,241);\n}\n\n.col-form input {\n  width: 2em;\n  margin-right: 1em;\n}\n.col-form label {\n  width: 2em;\n}\n\n.main-app {\n  margin-bottom: 54px;\n}\n", ""]);
 	
 	// exports
 
@@ -53670,7 +53670,7 @@
 	var __ = Object.assign;
 	var uuid = __webpack_require__(499);
 	
-	var _homepage = [{ Jumbotron: [{ Container: [{ Row: [{ Col: [{ h1: 'Hello World!' }, { p: 'This is cool' }] }] }] }], attrs: { fluid: true } }, { Container: [{ Row: [{ Col: [{ h1: 'Header' }, { p: 'More Words' }], attrs: { xs: 4 } }, { Col: [{ h1: 'Another' }, { p: 'Another P' }], attrs: { xs: 8 } }] }] }];
+	var _homepage = [{ style: '\n    .fold {\n      height: 100vh;\n      text-align: center;\n      background-color: orange;\n      position: relative;\n      font-size: 2rem;\n    }\n    .fold h1 {\n      color: white;\n      font-size: 4rem;\n    }\n    .v-center {\n      position: relative;\n      top: 50%;\n      transform: translateY(-50%);\n    }\n    .square-md-3 {\n      height: 0;\n      padding-bottom: 33.3333%;\n    }\n  ' }, { Jumbotron: [{ Container: [{ Row: [{ Col: [{ h1: 'Lorem Ipsum' }, { p: 'Dolor sit amet, consectetur adipiscing elit.' }] }] }], attrs: { className: 'v-center' } }], attrs: { fluid: true, className: 'fold' } }, { Container: [{ Row: [{ Col: [{ div: [{ h1: 'Header' }, { p: 'More Words Here' }] }], attrs: { md: 4, className: 'square-md-3' } }, { Col: [{ h1: 'Another' }, { p: 'Another P' }], attrs: { md: 4 } }, { Col: [{ h1: 'Another' }, { p: 'Another P' }], attrs: { md: 4 } }, { Col: [{ h1: 'Header' }, { p: 'More Words Here' }], attrs: { md: 4 } }, { Col: [{ h1: 'Another' }, { p: 'Another P' }], attrs: { md: 4 } }, { Col: [{ h1: 'Another' }, { p: 'Another P' }], attrs: { md: 4 } }] }] }];
 	
 	var _header = [{ Container: [{ Row: [{ Col: [{ h1: 'Header' }, { p: 'More Words' }], attrs: { xs: 4 } }, { Col: [{ h1: 'Header' }, { p: 'More Words' }], attrs: { xs: 4 } }, { Col: [{ h1: 'Header' }, { p: 'More Words' }], attrs: { xs: 4 } }] }] }, { Container: [{ Row: [{ Col: [{ h1: 'Header' }, { p: 'More Words' }], attrs: { xs: 6 } }, { Col: [{ h1: 'Header' }, { p: 'More Words' }], attrs: { xs: 6 } }] }] }, { Container: [{ Row: [{ Col: [{ h1: 'Header' }, { p: 'More Words' }], attrs: { xs: 6 } }, { Col: [{ h1: 'Header' }, { p: 'More Words' }], attrs: { xs: 6 } }] }] }];
 	
